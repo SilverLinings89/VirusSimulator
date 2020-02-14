@@ -26,15 +26,22 @@ export class FlightDataService {
       totalArrivals += c.Latest;
     });
     for(let i = 0; i < Departures.length; i++) {
-      this.countries[i] = new Country(Arrivals[i]["Country Code"],
-        Arrivals[i]["Country Name"],
-        0, 100*Departures[i].Latest, Arrivals[i].Latest / totalArrivals, Departures[i].Latest / totalDepartures)
+      if(Arrivals[i]["Latest"] > 0 && Departures[i].Latest > 0){
+        this.countries.push(new Country(
+          Arrivals[i]["Country Code"],
+          Arrivals[i]["Country Name"],
+          0, 
+          10*Departures[i].Latest, 
+          Arrivals[i].Latest / totalArrivals, 
+          Departures[i].Latest / totalDepartures));
+      }
     }
     this.countries.forEach(c => {
       if(c.nameFull === "China") {
         c.initialInfected = 1000;
       }
-    })
+    });
+    this.totalFlights = (totalArrivals + totalDepartures) / 2;
   }
 
   setInitialPatients(patients: {[countryCode: string]: number}) {
@@ -49,10 +56,16 @@ export class FlightDataService {
 
   computeCoupling(countryFrom: number, countryTo: number) {
     if(this.countryIndexIsValid(countryFrom) && this.countryIndexIsValid(countryTo)) {
+      if(countryFrom == countryTo) {
+        return 1 - (this.totalFlights*
+        this.countries[countryFrom].fractionOutgoing*
+        this.averagePassengersPerFlight / (this.countries[countryFrom].totalInhabitants * 365));
+      } else {
       return this.totalFlights*
         this.countries[countryFrom].fractionOutgoing*
         this.countries[countryTo].fractionIncoming*
-        this.averagePassengersPerFlight;
+        this.averagePassengersPerFlight / (this.countries[countryFrom].totalInhabitants * 365);
+      }
     } else {
       return 0;
     }
@@ -863,16 +876,6 @@ const Departures = [
     "Country Name": "Guyana",
     "Country Code": "GUY",
     "Latest": 0
-  },
-  {
-    "2015": 735426213.941591,
-    "2016": 774511681.349112,
-    "2017": 812733290.205012,
-    "2018": "",
-    "2019": "",
-    "Country Name": "High income",
-    "Country Code": "HIC",
-    "Latest": 812733290.205012
   },
   {
     "2015": 89082000,
@@ -2866,15 +2869,6 @@ const Arrivals =  [
     "Country Name": "Guyana",
     "Country Code": "GUY",
     "Latest": 247000
-  },
-  {
-    "2016": 768611252.037833,
-    "2017": 814739870.89352,
-    "2018": "",
-    "2019": "",
-    "Country Name": "High income",
-    "Country Code": "HIC",
-    "Latest": 814739870.89352
   },
   {
     "2016": 26553000,

@@ -5,9 +5,9 @@ export class Country {
     nameFull: string;
     totalInhabitants: number;
     initialInfected: number;
-    simulationResultS: number[];
-    simulationResultI: number[];
-    simulationResultR: number[];
+    public simulationResultS: number[];
+    public simulationResultI: number[];
+    public simulationResultR: number[];
     
     constructor(inCode: string, inName: string, inInitialInfected: number, inTotalInhabitants: number, inInc: number, inOut: number) {
         this.initialInfected = inInitialInfected;
@@ -16,12 +16,7 @@ export class Country {
         this.fractionOutgoing = inOut;
         this.nameCode = inCode;
         this.nameFull = inName;
-        this.simulationResultS = [];
-        this.simulationResultS[0] = this.totalInhabitants - this.initialInfected;
-        this.simulationResultI = [];
-        this.simulationResultI[0] = this.initialInfected;
-        this.simulationResultR = [];
-        this.simulationResultR[0] = 0;
+        this.clear()
     }
 
     interpolateDataForTime(inTime: number): {s: number, i: number, r: number} {
@@ -75,41 +70,52 @@ export class Country {
         this.simulationResultS = [];
         this.simulationResultI = [];
         this.simulationResultR = [];
+        this.simulationResultS.push(this.totalInhabitants);
+        this.simulationResultI.push(this.initialInfected);
+        this.simulationResultR.push(0);
     }
 
     getLatestS(): number {
         if(this.simulationResultS.length > 0) {
-            return this.simulationResultS.length - 1;
+            return this.simulationResultS[this.simulationResultS.length - 1];
         } else {
             return 0;
         }
     }
 
     getLatestI(): number {
-        if(this.simulationResultS.length > 0) {
-            return this.simulationResultI.length - 1;
+        if(this.simulationResultI.length > 0) {
+            return this.simulationResultI[this.simulationResultI.length - 1];
         } else {
             return 0;
         }
     }
 
+    getLatestIShare(): number {
+        return this.getLatestI() / this.totalInhabitants;
+    }
+
+    getLatestSShare(): number {
+        return this.getLatestS() / this.totalInhabitants;
+    }
+
     getLatestR(): number {
-        if(this.simulationResultS.length > 0) {
-            return this.simulationResultR.length - 1;
+        if(this.simulationResultR.length > 0) {
+            return this.simulationResultR[this.simulationResultR.length - 1];
         } else {
             return 0;
         }
     }
 
     addSimulationResultS(newS: number) {
-        this.simulationResultS[this.simulationResultS.length] = newS;
+        this.simulationResultS.push(this.getLatestS() + newS);
     }
 
     addSimulationResultI(newI: number) {
-        this.simulationResultI[this.simulationResultI.length] = newI;
+        this.simulationResultI.push(this.getLatestI() + newI);
     }
 
     addSimulationResultR(newR: number) {
-        this.simulationResultR[this.simulationResultR.length] = newR;
+        this.simulationResultR.push(this.getLatestR() + newR);
     }
 }

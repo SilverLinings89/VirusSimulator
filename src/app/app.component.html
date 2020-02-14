@@ -1,11 +1,14 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
+ 
 </div>
 <div>
-  <link rel="stylesheet" href="/assets/map.css"> 
-  <div id="mapcontainer" style="width:500px; height: 500px;"></div>
+  <div id="regions_div" style="width: 900px; height: 500px;"></div>
+
   <button (click)="run()">Run the simulation!</button>
+  <canvas baseChart width="400" height="400"
+  [datasets]="lineChartData"
+  [labels]="lineChartLabels"
+  [chartType]="lineChartType"
+  [options]="lineChartOptions"></canvas>
 </div>

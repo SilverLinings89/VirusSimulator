@@ -16,38 +16,32 @@ export class SimulationService {
     this.beta = 2;
     this.gamma = 0.2;
     this.timeStepLength = 1;
+    this.timeSpan = 10;
   }
 
   computeStep() {
-    for(let country = 0; country < this.flights.countries.length; country++) {
-      this.computeStepForOneCountry(country);
-    }
-  }
-
-  computeStepForOneCountry( baseCountryIdx: number) {
     const countryCount = this.flights.countries.length;
     const stepS = [];
     const stepI = [];
     const stepR = [];
     for(let i = 0; i < countryCount; i++) {
-      stepS[i] = 0;
-      stepR[i] = 0;
-      stepI[i] = 0;
+      stepS.push(0);
+      stepR.push(0);
+      stepI.push(0);
     }
 
     for(let incomingCountry = 0; incomingCountry < countryCount; incomingCountry++ ){
       let dS = 0;
-      let dR = 0;
       for(let j = 0; j < countryCount; j++) {
         for(let k = 0; k < countryCount; k++) {
-          const i = baseCountryIdx;
-          dS += - this.beta *
+          const i = incomingCountry;
+          dS -= this.beta *
             this.flights.computeCoupling(i,j)*this.flights.countries[i].getLatestS() * 
             this.flights.computeCoupling(k,j)*this.flights.countries[k].getLatestI() / 
             this.flights.countries[j].totalInhabitants;
-          dR += this.gamma * this.flights.countries[i].getLatestI();
         }
       }
+      let dR = this.gamma * this.flights.countries[incomingCountry].getLatestI();
       stepS[incomingCountry] = dS * this.timeStepLength;
       stepI[incomingCountry] = (-dS - dR) * this.timeStepLength;
       stepR[incomingCountry] = dR * this.timeStepLength;
@@ -66,12 +60,17 @@ export class SimulationService {
     });
   }
 
+  setMaxRunTime(inNumber: number) {
+    this.timeSpan = inNumber;
+  }
+
   run(inBeta: number, inGamma: number, stepLength: number, inInitialPatiens: {[countryCode: string]: number}) {
     this.compute(inBeta, inGamma, stepLength, inInitialPatiens);
     // potentially more code;
   }
 
   compute(inBeta: number, inGamma: number, stepLength: number, inInitialPatiens: {[countryCode: string]: number}) {
+    console.log("Start computing");
     this.beta = inBeta;
     this.gamma = inGamma;
     this.timeStepLength = stepLength;
@@ -79,6 +78,7 @@ export class SimulationService {
     this.flights.setInitialPatients(inInitialPatiens);
     let time = 0; 
     while(time < this.timeSpan) {
+      console.log("Time: " + time);
       this.computeStep();
       time += this.timeStepLength;
     }
