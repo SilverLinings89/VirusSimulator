@@ -3,7 +3,7 @@ import { SimulationService } from './simulation.service';
 import { FlightDataService } from './flight-data.service';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { BaseChartDirective, Color, Label } from 'ng2-charts';
-
+import * as environment from '../environments/environment';
 declare var google : any;
 
 @Component({
@@ -87,7 +87,7 @@ export class AppComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   constructor(private simulation: SimulationService, private flights: FlightDataService) {
-
+    this.initWorldMap();
   }
 
   loadData() {
@@ -95,6 +95,7 @@ export class AppComponent {
   }
 
   run() {
+    this.drawRegionsMap();
     this.loadData();
     this.runSimulation();
     this.visualize();
@@ -103,11 +104,9 @@ export class AppComponent {
   initWorldMap() {
     google.charts.load('current', {
       'packages':['geochart'],
-      // Note: you will need to get a mapsApiKey for your project.
-      // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-      'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+      'mapsApiKey': environment.environment.mapsApiKey
     });
-    google.charts.setOnLoadCallback(this.drawRegionsMap);
+    google.charts.setOnLoadCallback(console.log("Loaded"));
 
   }
 
@@ -116,7 +115,6 @@ export class AppComponent {
   }
 
   visualize() {
-    this.initWorldMap();
     let speed = 1;
     const maxRRate = this.simulation.getMaxRRate();
     const maxIRate = this.simulation.getMaxIRate();
