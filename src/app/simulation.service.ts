@@ -7,8 +7,8 @@ import { preserveWhitespacesDefault } from '@angular/compiler';
   providedIn: 'root'
 })
 export class SimulationService {
-  private timeStepLength: number; // in days
-  private timeSpan: number;
+  public timeStepLength: number; // in days
+  public timeSpan: number;
   private beta: number;
   private gamma: number;
 
