@@ -4,7 +4,7 @@ import { Country } from './types';
 @Injectable({
   providedIn: 'root'
 })
-export class FlightDataService {
+export class BaseDataService {
   countries: Country[];
   totalFlights: number;
   arrivalsScalingFactor: number;

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label, BaseChartDirective, Color } from 'ng2-charts';
-import { FlightDataService } from '../flight-data.service';
+import { BaseDataService } from '../flight-data.service';
 import { SimulationService } from '../simulation.service';
 
 @Component({
@@ -10,6 +10,7 @@ import { SimulationService } from '../simulation.service';
   styleUrls: ['./chart-view.component.css']
 })
 export class ChartViewComponent implements OnInit {
+  public countryIndex = 15;
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
@@ -77,9 +78,26 @@ export class ChartViewComponent implements OnInit {
   public lineChartLabels: Label[] = [];
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
-  constructor(private simulation: SimulationService, private flights: FlightDataService) { }
+  constructor(private simulation: SimulationService, private baseData: BaseDataService) { 
+    this.simulation.SimulationDone.subscribe((ret)=> {
+      console.log("Saw fire of observable.");
+      if(ret) {
+        this.updateChart();
+      }
+    })
+  }
 
   ngOnInit() {
+  }
+
+  updateChart() {
+    this.lineChartData[0].data = this.baseData.countries[this.countryIndex].simulationResultI;
+    this.lineChartData[1].data = this.baseData.countries[this.countryIndex].simulationResultR;
+    this.lineChartLabels = [];
+    for(let i = 0; i < this.simulation.timeSpan; i++) {
+      this.lineChartLabels.push(i.toString());
+    }
+    this.chart.update();
   }
 
 }

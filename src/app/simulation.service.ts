@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Country } from './types';
-import { FlightDataService } from './flight-data.service';
+import { BaseDataService } from './flight-data.service';
 import { preserveWhitespacesDefault } from '@angular/compiler';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +12,21 @@ export class SimulationService {
   public timeSpan: number;
   private beta: number;
   private gamma: number;
+  private simulationRunning: boolean;
+  public SimulationDone: Subject<boolean>;
+  public progress: number = 0;
 
-  constructor(private flights: FlightDataService) {
+  constructor(private baseData: BaseDataService) {
+    this.simulationRunning = false;
     this.beta = 2;
     this.gamma = 0.2;
     this.timeStepLength = 1;
     this.timeSpan = 10;
+    this.SimulationDone = new Subject<boolean>();
   }
 
   computeStep() {
-    const countryCount = this.flights.countries.length;
+    const countryCount = this.baseData.countries.length;
     const stepS = [];
     const stepI = [];
     const stepR = [];
@@ -36,26 +42,27 @@ export class SimulationService {
         for(let k = 0; k < countryCount; k++) {
           const i = incomingCountry;
           dS -= this.beta *
-            this.flights.computeCoupling(i,j)*this.flights.countries[i].getLatestS() * 
-            this.flights.computeCoupling(k,j)*this.flights.countries[k].getLatestI() / 
-            this.flights.countries[j].totalInhabitants;
+            this.baseData.computeCoupling(i,j)*this.baseData.countries[i].getLatestS() * 
+            this.baseData.computeCoupling(k,j)*this.baseData.countries[k].getLatestI() / 
+            this.baseData.countries[j].totalInhabitants;
         }
       }
-      let dR = this.gamma * this.flights.countries[incomingCountry].getLatestI();
+      let dR = this.gamma * this.baseData.countries[incomingCountry].getLatestI();
       stepS[incomingCountry] = dS * this.timeStepLength;
       stepI[incomingCountry] = (-dS - dR) * this.timeStepLength;
       stepR[incomingCountry] = dR * this.timeStepLength;
     }
 
     for(let i = 0; i < countryCount; i++) {
-      this.flights.countries[i].addSimulationResultS(stepS[i]);
-      this.flights.countries[i].addSimulationResultI(stepI[i]);
-      this.flights.countries[i].addSimulationResultR(stepR[i]);
+      this.baseData.countries[i].addSimulationResultS(stepS[i]);
+      this.baseData.countries[i].addSimulationResultI(stepI[i]);
+      this.baseData.countries[i].addSimulationResultR(stepR[i]);
     }
   }
 
   clear() {
-    this.flights.countries.forEach(c => {
+    this.progress = 0;
+    this.baseData.countries.forEach(c => {
       c.clear();
     });
   }
@@ -66,7 +73,7 @@ export class SimulationService {
 
   run(inBeta: number, inGamma: number, stepLength: number, inInitialPatiens: {[countryCode: string]: number}) {
     this.compute(inBeta, inGamma, stepLength, inInitialPatiens);
-    // potentially more code;
+    this.SimulationDone.next(true);
   }
 
   compute(inBeta: number, inGamma: number, stepLength: number, inInitialPatiens: {[countryCode: string]: number}) {
@@ -75,18 +82,19 @@ export class SimulationService {
     this.gamma = inGamma;
     this.timeStepLength = stepLength;
     this.clear();
-    this.flights.setInitialPatients(inInitialPatiens);
+    this.baseData.setInitialPatients(inInitialPatiens);
     let time = 0; 
     while(time < this.timeSpan) {
-      console.log("Time: " + time);
       this.computeStep();
       time += this.timeStepLength;
+      this.progress = 100* this.timeSpan / time;
     }
+    
   }
 
   getMaxIRate(): number {
     let ret = 0;
-    this.flights.countries.forEach(c => {
+    this.baseData.countries.forEach(c => {
       const ir = c.getMaxIRate();
       if(ir > ret) ret = ir;
     });
@@ -95,7 +103,7 @@ export class SimulationService {
 
   getMaxRRate(): number {
     let ret = 0;
-    this.flights.countries.forEach(c => {
+    this.baseData.countries.forEach(c => {
       const rr = c.getMaxRRate();
       if(rr > ret) ret = rr;
     });

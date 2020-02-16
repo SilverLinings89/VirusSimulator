@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FlightDataService } from '../flight-data.service';
+import { BaseDataService } from '../flight-data.service';
 import { SimulationService } from '../simulation.service';
 import { environment } from 'src/environments/environment';
 declare var google : any;
@@ -10,32 +10,25 @@ declare var google : any;
   styleUrls: ['./map-view.component.css']
 })
 export class MapViewComponent implements OnInit {
+  myColumnNames = ['Country', 'Infected'];
   map: any;
+  myData= [];
   currentTime: number;
-  constructor(private simulation: SimulationService, private flights: FlightDataService) {
+  mapType: 'GeoChart';
+  constructor(private simulation: SimulationService, private baseData: BaseDataService) {
     this.currentTime = 0;
+    this.simulation.SimulationDone.subscribe((res) => {
+      if(res) this.visualize();
+    })
    }
 
   ngOnInit() {
-    google.charts.load('current', {
-      'packages':['geochart'],
-      'mapsApiKey': environment.mapsApiKey
-    });
-    google.charts.setOnLoadCallback(this.drawRegionsMap());
-  }
-
-  drawRegionsMap() {
-    this.map = new google.visualization.GeoChart(document.getElementById('regions_div'));
   }
 
   visualize() {
-    let speed = 1;
     const maxRRate = this.simulation.getMaxRRate();
     const maxIRate = this.simulation.getMaxIRate();
-    while(this.currentTime < this.endTime) {
-      this.drawForTime(this.currentTime);  
-      this.currentTime += speed;
-    }
+    this.drawForTime(this.simulation.timeSpan - this.simulation.timeStepLength);
   }
 
   fractionToRGBCode(inFraction: number): string {
@@ -50,12 +43,10 @@ export class MapViewComponent implements OnInit {
   drawForTime(inTime: number) {
     let d = [];
     let maxIRate = this.simulation.getMaxIRate();
-    this.flights.countries.forEach(c=> {
-      d.push([c.nameCode, (c.interpolateRateForTime(this.currentTime).i/maxIRate) ]);
-    })
-    var data = google.visualization.arrayToDataTable(d);
-    let options = {};
-    setTimeout(() => {this.map.draw(data, options);}, 200);
+    for (let i = 0; i < this.baseData.countries.length; i++) {
+      d[i+1] = [this.baseData.countries[i].nameCode, (this.baseData.countries[i].interpolateRateForTime(this.currentTime).i/maxIRate) ];
+    }
+    this.myData = d;
   }
 
 }
