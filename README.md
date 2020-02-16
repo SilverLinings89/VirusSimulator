@@ -1,5 +1,3 @@
-[![JavaScript Style Guide: Good Parts](https://img.shields.io/badge/code%20style-goodparts-brightgreen.svg?style=flat)](https://github.com/dwyl/goodparts "JavaScript The Good Parts")
-
 # CoronaSimulator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.3.
