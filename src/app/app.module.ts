@@ -49,6 +49,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -63,6 +64,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MapViewComponent
   ],
   imports: [
+    AngularMultiSelectModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,

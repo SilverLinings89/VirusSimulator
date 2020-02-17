@@ -10,12 +10,12 @@ export class SimulationService {
   public timeSpan: number;
   private beta: number;
   private gamma: number;
-  private simulationRunning: boolean;
+  public simulationHasFinised: boolean;
   public SimulationDone: Subject<boolean>;
   public progress = 0;
 
   constructor(private baseData: BaseDataService) {
-    this.simulationRunning = false;
+    this.simulationHasFinised = false;
     this.beta = 2;
     this.gamma = 0.2;
     this.timeStepLength = 1;
@@ -71,6 +71,7 @@ export class SimulationService {
 
   run(inBeta: number, inGamma: number, stepLength: number, inInitialPatiens: {[countryCode: string]: number}) {
     this.compute(inBeta, inGamma, stepLength, inInitialPatiens);
+    this.simulationHasFinised = true;
     this.SimulationDone.next(true);
   }
 

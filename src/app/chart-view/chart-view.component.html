@@ -1,3 +1,13 @@
+<angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems" 
+    [settings]="dropdownSettings" 
+    (onSelect)="updateChart()" 
+    (onDeSelect)="updateChart()"
+    ></angular2-multiselect>
+<angular2-multiselect [data]="valueTypes" [(ngModel)]="selectedViewTypes" 
+[settings]="dropdownSettings2" 
+(onSelect)="updateChart()" 
+(onDeSelect)="updateChart()"
+></angular2-multiselect>
 <canvas baseChart width="400" height="400"
 [datasets]="lineChartData"
 [labels]="lineChartLabels"

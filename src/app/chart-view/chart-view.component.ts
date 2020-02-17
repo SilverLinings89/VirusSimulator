@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
-import { Label, BaseChartDirective, Color } from 'ng2-charts';
+import { Label, BaseChartDirective, Color, ThemeService } from 'ng2-charts';
 import { BaseDataService } from '../flight-data.service';
 import { SimulationService } from '../simulation.service';
 
@@ -10,11 +10,16 @@ import { SimulationService } from '../simulation.service';
   styleUrls: ['./chart-view.component.css']
 })
 export class ChartViewComponent implements OnInit {
+  selectedViewTypes = [];
+  valueTypes = [];
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
+  dropdownSettings2 = {};
   public countryIndex = 15;
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
       xAxes: [{
         ticks: {
           suggestedMin: 0,
@@ -70,34 +75,85 @@ export class ChartViewComponent implements OnInit {
     }
   ];
   public lineChartLegend = true;
-  public lineChartType = 'line'
+  public lineChartType = 'line';
   public lineChartData: ChartDataSets[] = [
     { data: [], label: 'I' },
-    { data: [], label: 'R' }
-  ];
+    { data: [], label: 'R' }];
   public lineChartLabels: Label[] = [];
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
-  constructor(private simulation: SimulationService, private baseData: BaseDataService) { 
-    this.simulation.SimulationDone.subscribe((ret)=> {
-      console.log("Saw fire of observable.");
-      if(ret) {
+  constructor(public simulation: SimulationService, private baseData: BaseDataService) {
+    this.simulation.SimulationDone.subscribe((ret) => {
+      if (ret) {
         this.updateChart();
       }
-    })
+    });
+    this.dropdownSettings = {
+      singleSelection: false,
+      text: 'Select Countries',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      enableSearchFilter: true,
+      classes: ''
+    };
+    this.dropdownSettings2 = {
+      singleSelection: false,
+      text: 'Select Groups',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      enableSearchFilter: true,
+      classes: ''
+    };
+    this.selectedViewTypes = [];
+    for (let i = 0; i < this.baseData.countries.length; i++) {
+      this.dropdownList.push({id: i, 'itemName': this.baseData.countries[i].nameFull});
+    }
+    this.valueTypes = [];
+    this.valueTypes.push({'id': 0, 'itemName': 'Susceptible' });
+    this.valueTypes.push({'id': 1, 'itemName': 'Infected' });
+    this.valueTypes.push({'id': 2, 'itemName': 'Recovered' });
   }
 
   ngOnInit() {
+
   }
 
   updateChart() {
-    this.lineChartData[0].data = this.baseData.countries[this.countryIndex].simulationResultI;
-    this.lineChartData[1].data = this.baseData.countries[this.countryIndex].simulationResultR;
-    this.lineChartLabels = [];
-    for(let i = 0; i < this.simulation.timeSpan; i++) {
-      this.lineChartLabels.push(i.toString());
+    if (this.simulation.simulationHasFinised) {
+      this.lineChartData = [];
+      for (let i = 0; i < this.selectedItems.length; i++) {
+        this.selectedViewTypes.forEach((vt) => {
+          if (vt.id === 0) {
+            this.lineChartData.push(
+              {
+                data: this.baseData.countries[this.selectedItems[i].id].simulationResultS,
+                label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Susceptible'
+              }
+            );
+          }
+          if (vt.id === 1) {
+            this.lineChartData.push(
+              {
+                data: this.baseData.countries[this.selectedItems[i].id].simulationResultI,
+                label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Infected'
+              }
+            );
+          }
+          if (vt.id === 2) {
+            this.lineChartData.push(
+              {
+                data: this.baseData.countries[this.selectedItems[i].id].simulationResultR,
+                label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Recovered'
+              }
+            );
+          }
+        });
+      }
+      this.lineChartLabels = [];
+      for (let i = 0; i < this.simulation.timeSpan; i++) {
+        this.lineChartLabels.push(i.toString());
+      }
+      this.chart.update();
     }
-    this.chart.update();
   }
-
 }
