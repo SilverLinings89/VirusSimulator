@@ -17,7 +17,12 @@ export class SimulationControlComponent implements OnInit {
   color: ThemePalette = 'primary';
   mode = 'determinate';
 
-  constructor(public simulation: SimulationService, private flights: BaseDataService) { }
+  constructor(public simulation: SimulationService, private flights: BaseDataService) {
+    this.beta = 1.1;
+    this.gamma = 1.2;
+    this.stepLength = 1;
+    this.endTime = 200;
+  }
 
   ngOnInit() {
   }
@@ -25,12 +30,12 @@ export class SimulationControlComponent implements OnInit {
 
 
   run() {
-    console.log("Run simulation...");
+    console.log('Run simulation...');
     this.simulation.setMaxRunTime(this.endTime);
-    this.simulation.run(this.beta,this.gamma,this.stepLength,{"China": 1000});
-    console.log("Done running simulation");
-    console.log("Max Infected:" + this.simulation.getMaxIRate());
-    console.log("Max Infected:" + this.simulation.getMaxRRate());
+    this.simulation.run(this.beta, this.gamma, this.stepLength, {'China': 1000});
+    console.log('Done running simulation');
+    console.log('Max Infected:' + this.simulation.getMaxIRate());
+    console.log('Max Infected:' + this.simulation.getMaxRRate());
   }
 
 }
