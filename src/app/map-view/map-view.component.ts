@@ -12,6 +12,17 @@ export class MapViewComponent implements OnInit {
   data: any;
   currentTime: number;
   dateString: string;
+  autoTicks = false;
+  disabled = true;
+  invert = false;
+  max = 100;
+  min = 0;
+  showTicks = false;
+  step = 1;
+  thumbLabel = false;
+  vertical = false;
+
+
   layout = {
     title: 'Prediciton of infected people worldwide',
     geo: {
@@ -24,7 +35,14 @@ export class MapViewComponent implements OnInit {
 };
 
   constructor(private simulation: SimulationService, private baseData: BaseDataService, public plotlyService: PlotlyService) {
-
+    this.simulation.SimulationDone.subscribe((d) => {
+      if(d) {
+        this.disabled = false;
+        this.min = 0;
+        this.max = this.simulation.timeSpan;
+        this.step = this.simulation.timeStepLength;
+      }
+    });
    }
 
   ngOnInit() {
@@ -61,11 +79,6 @@ export class MapViewComponent implements OnInit {
     const Plotly = this.plotlyService.getPlotly();
     Plotly.newPlot('myDiv', this.data, this.layout, {showLink: false});
     this.currentTime = 0;
-    this.simulation.SimulationDone.subscribe((res) => {
-      if (res) {
-        this.visualize();
-      }
-    });
   }
 
   visualize() {
@@ -90,7 +103,12 @@ export class MapViewComponent implements OnInit {
     return ret;
   }
 
+  draw() {
+    this.drawForTime(this.currentTime);
+  }
+
   drawForTime(inTime: number) {
+    this.currentTime = inTime;
     for (let i = 0; i < this.baseData.countries.length; i++) {
       this.data[0].z[i] = 100 * this.baseData.countries[i].interpolateRateForTime(inTime).i;
     }

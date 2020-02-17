@@ -108,14 +108,14 @@ export class Country {
     }
 
     addSimulationResultS(newS: number) {
-        this.simulationResultS.push(this.getLatestS() + newS);
+        this.simulationResultS.push(Math.max(0,this.getLatestS() + newS));
     }
 
     addSimulationResultI(newI: number) {
-        this.simulationResultI.push(this.getLatestI() + newI);
+        this.simulationResultI.push(Math.max(0,this.getLatestI() + newI));
     }
 
     addSimulationResultR(newR: number) {
-        this.simulationResultR.push(this.getLatestR() + newR);
+        this.simulationResultR.push(Math.max(0,this.getLatestR() + newR));
     }
 }

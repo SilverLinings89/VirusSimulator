@@ -1,12 +1,14 @@
-<mat-label>Beta</mat-label><input matInput type="number" [(ngModel)]="beta" /> <br />
-<mat-label>Gamma</mat-label><input matInput type="number" [(ngModel)]="gamma" /> <br />
-<mat-label>Step Length</mat-label><input matInput type="number" [(ngModel)]="stepLength" /> <br />
-<mat-label>Time Span</mat-label><input matInput type="number" [(ngModel)]="endTime" /><br />
-<button (click)="run()">Run the simulation!</button>
-<br /> <br />
+<div class="example-form"><mat-form-field><mat-label>Beta</mat-label><input matInput type="number" [(ngModel)]="beta" /></mat-form-field> <br>
+<mat-form-field><mat-label>Gamma</mat-label><input matInput type="number" [(ngModel)]="gamma" /> </mat-form-field> <br>
+<mat-form-field><mat-label>Step Length</mat-label><input matInput type="number" [(ngModel)]="stepLength" /> </mat-form-field><br>
+<mat-form-field><mat-label>Time Span</mat-label><input matInput type="number" [(ngModel)]="endTime" /></mat-form-field><br>
+<button mat-raised-button color="primary" (click)="run()">Run the simulation!</button> <br />
+
 <mat-progress-bar
+style="margin-top: 30px;"
           class="example-margin"
           [color]="color"
           [mode]="mode"
           [value]="simulation.progress">
       </mat-progress-bar>
+</div>

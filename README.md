@@ -2,26 +2,27 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.3.
 
+## Setup
+
+Run `npm i` to install all dependencies.
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Status
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The project is currently not in a released state, meaning it will not work completely and some core features are missing. A basic implementation is there however.
 
-## Running end-to-end tests
+## Data Sources
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Special Thanks to: 
+- [JonSnowLabs](https://datahub.io/JohnSnowLabs/population-figures-by-country) for providing a list of country populations.
+- [The World Bank](https://data.worldbank.org/) for providing a list of [Departures](https://data.worldbank.org/indicator/ST.INT.DPRT) and [Arrivals](https://data.worldbank.org/indicator/ST.INT.ARVL) I could parse to JSON and use.
+- Obviously the [angular team](https://angular.io/), which is just doing an awesome job.
+- [Plotly](plot.ly) for their chart-tools in Javascript, which I use to draw the world map.
+- [Chart.js](https://www.chartjs.org/) which I use to draw the line graphs.
