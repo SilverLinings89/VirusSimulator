@@ -9,8 +9,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { GoogleChartsModule } from 'angular-google-charts';
-import { environment } from 'src/environments/environment';
+
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
@@ -20,13 +23,13 @@ import { environment } from 'src/environments/environment';
     MapViewComponent
   ],
   imports: [
-    GoogleChartsModule.forRoot(environment.mapsApiKey, "46"),
     FormsModule,
     FlexLayoutModule,
     BrowserModule,
     MatProgressBarModule,
     MatFormFieldModule,
-    ChartsModule
+    ChartsModule,
+    PlotlyModule
   ],
   providers: [],
   bootstrap: [AppComponent]

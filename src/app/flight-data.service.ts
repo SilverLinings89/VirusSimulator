@@ -10,7 +10,7 @@ export class BaseDataService {
   arrivalsScalingFactor: number;
   averagePassengersPerFlight: number;
 
-  constructor() { 
+  constructor() {
     this.averagePassengersPerFlight = 100;
     this.initialize();
   }
@@ -26,18 +26,18 @@ export class BaseDataService {
       totalArrivals += c.Latest;
     });
     for(let i = 0; i < Departures.length; i++) {
-      if(Arrivals[i]["Latest"] > 0 && Departures[i].Latest > 0){
+      if(Arrivals[i]['Latest'] > 0 && Departures[i].Latest > 0) {
         this.countries.push(new Country(
-          Arrivals[i]["Country Code"],
-          Arrivals[i]["Country Name"],
-          0, 
-          10*Departures[i].Latest, 
-          Arrivals[i].Latest / totalArrivals, 
+          Arrivals[i]['Country Code'],
+          Arrivals[i]['Country Name'],
+          0,
+          10*Departures[i].Latest,
+          Arrivals[i].Latest / totalArrivals,
           Departures[i].Latest / totalDepartures));
       }
     }
     this.countries.forEach(c => {
-      if(c.nameFull === "China") {
+      if(c.nameFull === 'China') {
         c.initialInfected = 1000;
       }
     });
@@ -45,7 +45,7 @@ export class BaseDataService {
   }
 
   setInitialPatients(patients: {[countryCode: string]: number}) {
-    for(let key in patients) {
+    for (let key in patients) {
       this.countries.forEach(c => {
         if(c.nameCode == key) {
           c.initialInfected = patients[key];
