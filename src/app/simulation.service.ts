@@ -13,6 +13,7 @@ export class SimulationService {
   public simulationHasFinised: boolean;
   public SimulationDone: Subject<boolean>;
   public progress = 0;
+  public mortalityRate = 0.001;
 
   constructor(private baseData: BaseDataService) {
     this.simulationHasFinised = false;
@@ -69,7 +70,10 @@ export class SimulationService {
     this.timeSpan = inNumber;
   }
 
-  run(inBeta: number, inGamma: number, stepLength: number, inInitialPatiens: {[countryCode: string]: number}) {
+  run(inBeta: number, inGamma: number, stepLength: number, inInitialPatiens: {[countryCode: string]: number}, mortality?: number) {
+    if(mortality) {
+      this.mortalityRate = mortality;
+    }
     this.compute(inBeta, inGamma, stepLength, inInitialPatiens);
     this.simulationHasFinised = true;
     this.SimulationDone.next(true);
@@ -107,6 +111,20 @@ export class SimulationService {
       const rr = c.getMaxRRate();
       if (rr > ret) {
         ret = rr;
+      }
+    });
+    return ret;
+  }
+
+  computeTotalDeaths(rate: boolean, mortality: number): number[] {
+    let ret = [];
+    for(let i = 0; i < this.baseData.countries[0].simulationResultI.length; i++) {
+      ret[i] = 0;
+    }
+    this.baseData.countries.forEach(c => {
+      const inp = c.getFatalities(mortality, rate);
+      for(let i = 0; i < inp.length; i++) {
+        ret[i] += inp[i];
       }
     });
     return ret;

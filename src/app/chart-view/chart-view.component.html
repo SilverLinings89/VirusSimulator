@@ -8,6 +8,13 @@
 (onSelect)="updateChart()" 
 (onDeSelect)="updateChart()"
 ></angular2-multiselect>
+<mat-slide-toggle
+          class=""
+          [disabled]="false"
+          (change)="updateChart()"
+          [(ngModel)]="showRate">
+        Show Rate
+      </mat-slide-toggle>
 <canvas baseChart width="400" height="400"
 [datasets]="lineChartData"
 [labels]="lineChartLabels"

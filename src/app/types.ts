@@ -118,4 +118,77 @@ export class Country {
     addSimulationResultR(newR: number) {
         this.simulationResultR.push(Math.max(0,this.getLatestR() + newR));
     }
+
+    getSVectorTotal(rate: boolean): number[] {
+        let ret = [];
+        for(let i = 0; i < this.simulationResultS.length; i++) {
+            ret.push(this.simulationResultS[i]);
+        }
+        if(rate) {
+            const count = this.totalInhabitants;
+            for(let i = 0; i < this.simulationResultS.length; i++) {
+                ret[i] = ret[i] / count;
+                if(ret[i] < 0) ret[i] = 0;
+                if(ret[i] > 1) ret[i] = 1;
+            }
+        } else {
+            for(let i = 0; i < this.simulationResultS.length; i++) {
+                ret[i] = Math.floor(ret[i]);
+            }
+        }
+        return ret;        
+    }
+
+    getIVectorTotal(rate: boolean): number[] {
+        let ret = [];
+        for(let i = 0; i < this.simulationResultI.length; i++) {
+            ret.push(this.simulationResultI[i]);
+        }
+        if(rate) {
+            const count = this.totalInhabitants;
+            for(let i = 0; i < this.simulationResultI.length; i++) {
+                ret[i] = ret[i] / count;
+                if(ret[i] < 0) ret[i] = 0;
+                if(ret[i] > 1) ret[i] = 1;
+            }
+        } else {
+            for(let i = 0; i < this.simulationResultI.length; i++) {
+                ret[i] = Math.floor(ret[i]);
+            }
+        }
+        return ret;        
+    }
+
+    getRVectorTotal(rate: boolean): number[] {
+        let ret = [];
+        for(let i = 0; i < this.simulationResultR.length; i++) {
+            ret.push(this.simulationResultR[i]);
+        }
+        if(rate) {
+            const count = this.totalInhabitants;
+            for(let i = 0; i < this.simulationResultR.length; i++) {
+                ret[i] = ret[i] / count;
+                if(ret[i] < 0) ret[i] = 0;
+                if(ret[i] > 1) ret[i] = 1;
+            }
+        } else {
+            for(let i = 0; i < this.simulationResultR.length; i++) {
+                ret[i] = Math.floor(ret[i]);
+            }
+        }
+        return ret;        
+    }
+
+    getFatalities(mortality: number, rate: boolean): number[] {
+        let ret = this.getRVectorTotal(rate);
+        for(let i = 0; i < ret.length; i++) {
+            ret[i] *= mortality;
+        }
+        if(!rate) {
+            for(let i = 0; i < ret.length; i++) {
+                ret[i] = Math.floor(ret[i]);
+            }   
+        }
+        return ret;
+    }
 }

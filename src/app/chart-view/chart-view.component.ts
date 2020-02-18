@@ -16,6 +16,7 @@ export class ChartViewComponent implements OnInit {
   selectedItems = [];
   dropdownSettings = {};
   dropdownSettings2 = {};
+  showRate = false;
   public countryIndex = 15;
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
@@ -31,16 +32,6 @@ export class ChartViewComponent implements OnInit {
         {
           id: 'y-axis-0',
           position: 'left',
-        },
-        {
-          id: 'y-axis-1',
-          position: 'right',
-          gridLines: {
-            color: 'rgba(255,0,0,0.3)',
-          },
-          ticks: {
-            fontColor: 'red',
-          }
         }
       ]
     },
@@ -112,6 +103,7 @@ export class ChartViewComponent implements OnInit {
     this.valueTypes.push({'id': 0, 'itemName': 'Susceptible' });
     this.valueTypes.push({'id': 1, 'itemName': 'Infected' });
     this.valueTypes.push({'id': 2, 'itemName': 'Recovered' });
+    this.valueTypes.push({'id': 3, 'itemName': 'Deaths' });
   }
 
   ngOnInit() {
@@ -126,7 +118,7 @@ export class ChartViewComponent implements OnInit {
           if (vt.id === 0) {
             this.lineChartData.push(
               {
-                data: this.baseData.countries[this.selectedItems[i].id].simulationResultS,
+                data: this.baseData.countries[this.selectedItems[i].id].getSVectorTotal(this.showRate),
                 label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Susceptible'
               }
             );
@@ -134,7 +126,7 @@ export class ChartViewComponent implements OnInit {
           if (vt.id === 1) {
             this.lineChartData.push(
               {
-                data: this.baseData.countries[this.selectedItems[i].id].simulationResultI,
+                data: this.baseData.countries[this.selectedItems[i].id].getIVectorTotal(this.showRate),
                 label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Infected'
               }
             );
@@ -142,8 +134,16 @@ export class ChartViewComponent implements OnInit {
           if (vt.id === 2) {
             this.lineChartData.push(
               {
-                data: this.baseData.countries[this.selectedItems[i].id].simulationResultR,
+                data: this.baseData.countries[this.selectedItems[i].id].getRVectorTotal(this.showRate),
                 label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Recovered'
+              }
+            );
+          }
+          if (vt.id === 3) {
+            this.lineChartData.push(
+              {
+                data: this.baseData.countries[this.selectedItems[i].id].getFatalities(this.simulation.mortalityRate, this.showRate),
+                label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Deaths'
               }
             );
           }

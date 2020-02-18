@@ -21,6 +21,7 @@ export class MapViewComponent implements OnInit {
   step = 1;
   thumbLabel = false;
   vertical = false;
+  tickInterval = 1;
 
 
   layout = {
@@ -41,6 +42,7 @@ export class MapViewComponent implements OnInit {
         this.min = 0;
         this.max = this.simulation.timeSpan;
         this.step = this.simulation.timeStepLength;
+        this.tickInterval = this.simulation.timeStepLength;
       }
     });
    }
