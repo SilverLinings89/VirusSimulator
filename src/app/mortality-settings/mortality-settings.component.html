@@ -1,0 +1,8 @@
+<input [(ngModel)]="simulation.baseMortalityPercentage" />
+<mat-slide-toggle class="" [(ngModel)]="simulation.infectionBasedMortalityEnabled">Enable Infection-Based Mortality</mat-slide-toggle>
+<div *ngIf="simulation.infectionBasedMortalityEnabled">
+    Need higher Mortality
+    <input [(ngModel)]="simulation.advancedMortalityPercentage" />
+    Need infection threshold
+    <input [(ngModel)]="simulation.advancedMortalityInfectionThreshold" />
+</div>

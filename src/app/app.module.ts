@@ -60,6 +60,11 @@ import { HeaderComponent } from './header/header.component';
 import { AboutComponent } from './about/about.component';
 import { MathComponent } from './math/math.component';
 import { SimulationDoneGuard } from './simulation-done.guard';
+import { InitialInfectionComponent } from './initial-infection/initial-infection.component';
+import { MortalitySettingsComponent } from './mortality-settings/mortality-settings.component';
+import { DiseasaeParameterSettingsComponent } from './diseasae-parameter-settings/diseasae-parameter-settings.component';
+import { NumericalSettingsComponent } from './numerical-settings/numerical-settings.component';
+import { PresetListComponent } from './preset-list/preset-list.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -84,7 +89,12 @@ const appRoutes: Routes = [
     SidenavComponent,
     HeaderComponent,
     AboutComponent,
-    MathComponent
+    MathComponent,
+    InitialInfectionComponent,
+    MortalitySettingsComponent,
+    DiseasaeParameterSettingsComponent,
+    NumericalSettingsComponent,
+    PresetListComponent
   ],
   imports: [
     AngularMultiSelectModule,

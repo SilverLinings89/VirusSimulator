@@ -1,67 +1,55 @@
-<<<<<<< HEAD
-<div class="example-form"><mat-form-field><mat-label>Beta</mat-label><input matInput type="number" [(ngModel)]="beta" /></mat-form-field> <br>
-<mat-form-field><mat-label>Gamma</mat-label><input matInput type="number" [(ngModel)]="gamma" /> </mat-form-field> <br>
-<mat-form-field><mat-label>Step Length</mat-label><input matInput type="number" [(ngModel)]="stepLength" /> </mat-form-field><br>
-<mat-form-field><mat-label>Time Span</mat-label><input matInput type="number" [(ngModel)]="endTime" /></mat-form-field><br>
-<mat-form-field><mat-label>Mortality Rate</mat-label><input matInput type="number" [(ngModel)]="mortality" /></mat-form-field><br>
-<button mat-raised-button color="primary" (click)="run()">Run the simulation!</button> <br />
-
-<mat-progress-bar
-style="margin-top: 30px;"
-          class="example-margin"
-          [color]="color"
-          [mode]="mode"
-          [value]="simulation.progress">
-      </mat-progress-bar>
-=======
 <div class="main__cards">
-    <div class="card">
-      <div class="card__header">
-        <div class="card__header-title text-light"><strong>Virus Settings</strong>
-        </div>
-        <div class="settings">
-          <div class="settings__block"><i class="fas fa-edit"></i></div>
-          <div class="settings__block"><i class="fas fa-cog"></i></div>
-        </div>
+  <div class="card">
+    <div class="card__header">
+      <div class="card__header-title text-light"><strong>Virus Settings</strong>
       </div>
-      <div class="card__main">
-        <mat-form-field><mat-label>Beta</mat-label><input matInput type="number" [(ngModel)]="beta" /></mat-form-field> <br>
-        <mat-form-field><mat-label>Gamma</mat-label><input matInput type="number" [(ngModel)]="gamma" /> </mat-form-field> <br>
-        <mat-form-field><mat-label>Step Length</mat-label><input matInput type="number" [(ngModel)]="stepLength" /> </mat-form-field><br>
-        <mat-form-field><mat-label>Time Span</mat-label><input matInput type="number" [(ngModel)]="endTime" /></mat-form-field><br>
-        <button mat-raised-button color="primary" (click)="run()">Run the simulation!</button> <br />
+      <div class="settings">
+        <div class="settings__block"><i class="fas fa-edit"></i></div>
+        <div class="settings__block"><i class="fas fa-cog"></i></div>
       </div>
     </div>
-    <div class="card">
-      <div class="card__header">
-        <div class="card__header-title text-light"><strong>Initial Infections</strong>
-          <a href="#" class="card__header-link text-bold">View All</a>
-          <a href="#" class="card__header-link text-bold">View Less</a>
-        </div>
-        <div class="settings">
-          <div class="settings__block"><i class="fas fa-edit"></i></div>
-          <div class="settings__block"><i class="fas fa-cog"></i></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="documents">
-          
-        </div>
-      </div>
-    </div>
-    <div class="card card--finance">
-      <div class="card__header">
-        <div class="card__header-title text-light"><strong>Response Settings</strong>
-        </div>
-        <div class="settings">
-          <div class="settings__block"><i class="fas fa-edit"></i></div>
-          <div class="settings__block"><i class="fas fa-cog"></i></div>
-        </div>
-      </div>
-      Response settings go here.
+    <div class="card__main">
+      <mat-form-field>
+        <mat-label>Beta</mat-label><input matInput type="number" [(ngModel)]="beta" />
+      </mat-form-field> <br>
+      <mat-form-field>
+        <mat-label>Gamma</mat-label><input matInput type="number" [(ngModel)]="gamma" />
+      </mat-form-field> <br>
+      <mat-form-field>
+        <mat-label>Step Length</mat-label><input matInput type="number" [(ngModel)]="stepLength" />
+      </mat-form-field><br>
+      <mat-form-field>
+        <mat-label>Time Span</mat-label><input matInput type="number" [(ngModel)]="endTime" />
+      </mat-form-field><br>
+      <button mat-raised-button color="primary" (click)="run()">Run the simulation!</button> <br />
     </div>
   </div>
-<div>
-    
->>>>>>> Transition to new layout - WIP
+  <div class="card">
+    <div class="card__header">
+      <div class="card__header-title text-light"><strong>Initial Infections</strong>
+        <a href="#" class="card__header-link text-bold">View All</a>
+        <a href="#" class="card__header-link text-bold">View Less</a>
+      </div>
+      <div class="settings">
+        <div class="settings__block"><i class="fas fa-edit"></i></div>
+        <div class="settings__block"><i class="fas fa-cog"></i></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="documents">
+
+      </div>
+    </div>
+  </div>
+  <div class="card card--finance">
+    <div class="card__header">
+      <div class="card__header-title text-light"><strong>Response Settings</strong>
+      </div>
+      <div class="settings">
+        <div class="settings__block"><i class="fas fa-edit"></i></div>
+        <div class="settings__block"><i class="fas fa-cog"></i></div>
+      </div>
+    </div>
+    <app-mortality-settings></app-mortality-settings>
+  </div>
 </div>

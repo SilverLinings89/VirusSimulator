@@ -14,6 +14,10 @@ export class SimulationService {
   public SimulationDone: Subject<boolean>;
   public progress = 0;
   public mortalityRate = 0.001;
+  public infectionBasedMortalityEnabled = false;
+  public advancedMortalityPercentage: number = 1.0;
+  public advancedMortailiyPercentage: number = 5.0;
+  public advancedMortalityInfectionThreshold: number = 0.01;
 
   constructor(private baseData: BaseDataService) {
     this.simulationHasFinised = false;
