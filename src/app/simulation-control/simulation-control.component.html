@@ -1,3 +1,42 @@
+<div class="main-overview">
+  <div class="overviewCard">
+    <div class="overviewCard-icon overviewCard-icon--document">
+       <i class="far fa-file-alt"></i>
+    </div>
+    <div class="overviewCard-description">
+      <h3 class="overviewCard-title text-light"><strong>Run</strong> the simulation</h3>
+      <p class="overviewCard-subtitle"></p>
+    </div>
+  </div>
+  <div class="overviewCard">
+    <div class="overviewCard-icon overviewCard-icon--calendar">
+       <i class="far fa-calendar-check"></i>
+    </div>
+    <div class="overviewCard-description">
+      <h3 class="overviewCard-title text-light"><strong>Measles</strong> Preset I</h3>
+      <p class="overviewCard-subtitle">with 0% vaccination</p>
+    </div>
+  </div>
+  <div class="overviewCard">
+    <div class="overviewCard-icon overviewCard-icon--mail">
+       <i class="far fa-envelope"></i>
+    </div>
+    <div class="overviewCard-description">
+      <h3 class="overviewCard-title text-light"><strong>Measles</strong> Preset II</h3>
+      <p class="overviewCard-subtitle">with 90% vaccination</p>
+    </div>
+  </div>
+  <div class="overviewCard">
+    <div class="overviewCard-icon overviewCard-icon--photo">
+       <i class="far fa-file-image"></i>
+    </div>
+    <div class="overviewCard-description">
+      <h3 class="overviewCard-title text-light"><strong>Corona Virus</strong> Preset</h3>
+      <p class="overviewCard-subtitle"></p>
+    </div>
+  </div>
+</div>
+
 <div class="main__cards">
   <div class="card">
     <div class="card__header">
@@ -9,19 +48,20 @@
       </div>
     </div>
     <div class="card__main">
-      <mat-form-field>
-        <mat-label>Beta</mat-label><input matInput type="number" [(ngModel)]="beta" />
-      </mat-form-field> <br>
-      <mat-form-field>
-        <mat-label>Gamma</mat-label><input matInput type="number" [(ngModel)]="gamma" />
-      </mat-form-field> <br>
-      <mat-form-field>
-        <mat-label>Step Length</mat-label><input matInput type="number" [(ngModel)]="stepLength" />
-      </mat-form-field><br>
-      <mat-form-field>
-        <mat-label>Time Span</mat-label><input matInput type="number" [(ngModel)]="endTime" />
-      </mat-form-field><br>
-      <button mat-raised-button color="primary" (click)="run()">Run the simulation!</button> <br />
+      <app-disease-parameter-settings></app-disease-parameter-settings>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card__header">
+      <div class="card__header-title text-light"><strong>Numerical Settings</strong>
+      </div>
+      <div class="settings">
+        <div class="settings__block"><i class="fas fa-edit"></i></div>
+        <div class="settings__block"><i class="fas fa-cog"></i></div>
+      </div>
+    </div>
+    <div class="card__main">
+      <app-numerical-settings></app-numerical-settings>
     </div>
   </div>
   <div class="card">
@@ -35,10 +75,8 @@
         <div class="settings__block"><i class="fas fa-cog"></i></div>
       </div>
     </div>
-    <div class="card">
-      <div class="documents">
-
-      </div>
+    <div class="card__main">
+      <app-initial-infection></app-initial-infection>
     </div>
   </div>
   <div class="card card--finance">
@@ -50,6 +88,8 @@
         <div class="settings__block"><i class="fas fa-cog"></i></div>
       </div>
     </div>
-    <app-mortality-settings></app-mortality-settings>
+    <div class="card__main">
+      <app-mortality-settings></app-mortality-settings>
+    </div>
   </div>
 </div>

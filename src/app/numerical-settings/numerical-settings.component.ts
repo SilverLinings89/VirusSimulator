@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SimulationService } from '../simulation.service';
 
 @Component({
   selector: 'app-numerical-settings',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NumericalSettingsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public simulation: SimulationService) { }
 
   ngOnInit(): void {
   }

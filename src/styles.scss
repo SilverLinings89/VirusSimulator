@@ -16,7 +16,7 @@ $color-alto: #D3D3D3;
 
 $height-header: 50px;
 $height-footer: 50px;
-$width-sidenav: 240px;
+$width-sidenav: 280px;
 
 @mixin profile-avatar {
   // background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1609106/headshot.png");
@@ -221,7 +221,7 @@ a {
     align-items: center;
     padding: 0 16px;
     height: $height-header;
-    background-color: rgba(0, 0, 0, .15);
+    background-color:#fff;
 
     &-icon {
       margin-top: 2px;
@@ -564,7 +564,7 @@ a {
 
   &__main {
     position: relative;
-    padding-right: 20px;
+    padding: 20px;
     background-color: $color-white;
 
     &:after {
@@ -575,6 +575,7 @@ a {
       bottom: 0;
       width: 2px;
       background-color: #f0f0f0;
+      display: none;
     }
   }
 

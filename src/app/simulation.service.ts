@@ -74,22 +74,16 @@ export class SimulationService {
     this.timeSpan = inNumber;
   }
 
-  run(inBeta: number, inGamma: number, stepLength: number, inInitialPatiens: {[countryCode: string]: number}, mortality?: number) {
-    if(mortality) {
-      this.mortalityRate = mortality;
-    }
-    this.compute(inBeta, inGamma, stepLength, inInitialPatiens);
+  run() {
+    this.simulationHasFinised = false;
+    this.compute();
     this.simulationHasFinised = true;
     this.SimulationDone.next(true);
   }
 
-  compute(inBeta: number, inGamma: number, stepLength: number, inInitialPatiens: {[countryCode: string]: number}) {
+  compute() {
     console.log('Start computing');
-    this.beta = inBeta;
-    this.gamma = inGamma;
-    this.timeStepLength = stepLength;
     this.clear();
-    this.baseData.setInitialPatients(inInitialPatiens);
     let time = 0;
     while (time < this.timeSpan) {
       this.computeStep();

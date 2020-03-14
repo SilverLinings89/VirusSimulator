@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseDataService } from '../flight-data.service';
 import { SimulationService } from '../simulation.service';
 import {ThemePalette} from '@angular/material/core';
-
+import {faCalendar} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-simulation-control',
   templateUrl: './simulation-control.component.html',
@@ -16,13 +16,14 @@ export class SimulationControlComponent implements OnInit {
   public mortality: number;
   color: ThemePalette = 'primary';
   mode = 'determinate';
-
+  faCalendar = faCalendar;
   constructor(public simulation: SimulationService, private flights: BaseDataService) {
     this.beta = 1.1;
     this.gamma = 1.2;
     this.stepLength = 1;
     this.endTime = 80;
     this.mortality = 0.001
+    
   }
 
   ngOnInit() {
@@ -30,13 +31,8 @@ export class SimulationControlComponent implements OnInit {
 
 
 
-  run() {
-    console.log('Run simulation...');
-    this.simulation.setMaxRunTime(this.endTime);
-    this.simulation.run(this.beta, this.gamma, this.stepLength, {'China': 1000}, this.mortality);
-    console.log('Done running simulation');
-    console.log('Max Infected:' + this.simulation.getMaxIRate());
-    console.log('Max Infected:' + this.simulation.getMaxRRate());
+  runSimulation() {
+    this.simulation.run();
   }
 
 }

@@ -62,9 +62,10 @@ import { MathComponent } from './math/math.component';
 import { SimulationDoneGuard } from './simulation-done.guard';
 import { InitialInfectionComponent } from './initial-infection/initial-infection.component';
 import { MortalitySettingsComponent } from './mortality-settings/mortality-settings.component';
-import { DiseasaeParameterSettingsComponent } from './diseasae-parameter-settings/diseasae-parameter-settings.component';
+import { DiseaseParameterSettingsComponent } from './disease-parameter-settings/disease-parameter-settings.component';
 import { NumericalSettingsComponent } from './numerical-settings/numerical-settings.component';
 import { PresetListComponent } from './preset-list/preset-list.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -92,7 +93,7 @@ const appRoutes: Routes = [
     MathComponent,
     InitialInfectionComponent,
     MortalitySettingsComponent,
-    DiseasaeParameterSettingsComponent,
+    DiseaseParameterSettingsComponent,
     NumericalSettingsComponent,
     PresetListComponent
   ],
@@ -152,7 +153,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true }
-    )
+    ),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
