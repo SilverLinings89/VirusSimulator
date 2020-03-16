@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { SimulationService } from './simulation.service';
 import { BaseDataService } from './flight-data.service';
-import { ChartDataSets, ChartOptions } from 'chart.js';
-import { BaseChartDirective, Color, Label } from 'ng2-charts';
 import * as environment from '../environments/environment';
 
 @Component({
@@ -12,7 +10,7 @@ import * as environment from '../environments/environment';
 })
 export class AppComponent {
   title = 'CoronaSimulator';
-  constructor(private simulation: SimulationService, private flights: BaseDataService) {
+  constructor(public simulation: SimulationService, private flights: BaseDataService) {
     this.flights.initialize();
   }
 

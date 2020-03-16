@@ -13,11 +13,10 @@ export class SimulationService {
   public simulationHasFinised: boolean;
   public SimulationDone: Subject<boolean>;
   public progress = 0;
-  public mortalityRate = 0.001;
+  public baseMortalityRate = 0.001;
   public infectionBasedMortalityEnabled = false;
-  public advancedMortalityPercentage = 1.0;
-  public advancedMortailiyPercentage = 5.0;
-  public advancedMortalityInfectionThreshold = 0.01;
+  public criticalMortality = 1.0;
+  public criticalThreshold = 0.01;
 
   constructor(private baseData: BaseDataService) {
     this.simulationHasFinised = false;
@@ -27,6 +26,13 @@ export class SimulationService {
     this.timeSpan = 200;
     this.SimulationDone = new Subject<boolean>();
   }
+
+  setCriticalProperties(enableCriticalTracking: boolean, baseMortality: number, criticalMortality: number, criticalThreshold: number) {
+    this.infectionBasedMortalityEnabled = enableCriticalTracking;
+    this.baseMortalityRate = baseMortality;
+    this.criticalMortality = criticalMortality;
+    this.criticalThreshold = criticalThreshold;
+}
 
   computeStep() {
     const countryCount = this.baseData.countries.length;

@@ -13,4 +13,7 @@ export class MortalitySettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  updateMortalities() {
+    
+  }
 }
