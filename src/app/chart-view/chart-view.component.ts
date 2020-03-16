@@ -1,84 +1,28 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartDataSets, ChartOptions } from 'chart.js';
-import { Label, BaseChartDirective, Color, ThemeService } from 'ng2-charts';
+import { Component, AfterViewInit} from '@angular/core';
 import { BaseDataService } from '../flight-data.service';
 import { SimulationService } from '../simulation.service';
+import { Chart } from 'angular-highcharts';
 
 @Component({
   selector: 'app-chart-view',
   templateUrl: './chart-view.component.html',
   styleUrls: ['./chart-view.component.css']
 })
-export class ChartViewComponent implements OnInit {
+export class ChartViewComponent implements AfterViewInit  {
+  ready = false;
   selectedViewTypes = [];
   valueTypes = [];
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
   dropdownSettings2 = {};
+  lineChartData: any;
+  lineChartLabels = [];
   showRate = false;
   public countryIndex = 15;
-  public lineChartOptions: (ChartOptions & { annotation: any }) = {
-    responsive: true,
-    scales: {
-      xAxes: [{
-        ticks: {
-          suggestedMin: 0,
-          suggestedMax: 100,
-          stepSize: 10
-        }
-      }],
-      yAxes: [
-        {
-          id: 'y-axis-0',
-          position: 'left',
-        }
-      ]
-    },
-    annotation: {
-
-    },
-  };
-  public lineChartColors: Color[] = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
-    { // red
-      backgroundColor: 'rgba(255,0,0,0.3)',
-      borderColor: 'red',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
-  ];
-  public lineChartLegend = true;
-  public lineChartType = 'line';
-  public lineChartData: ChartDataSets[] = [
-    { data: [], label: 'I' },
-    { data: [], label: 'R' }];
-  public lineChartLabels: Label[] = [];
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  chart: Chart;
 
   constructor(public simulation: SimulationService, private baseData: BaseDataService) {
-    this.simulation.SimulationDone.subscribe((ret) => {
-      if (ret) {
-        this.updateChart();
-      }
-    });
     this.dropdownSettings = {
       singleSelection: false,
       text: 'Select Countries',
@@ -95,19 +39,27 @@ export class ChartViewComponent implements OnInit {
       enableSearchFilter: true,
       classes: ''
     };
-    this.selectedViewTypes = [];
+    this.selectedViewTypes = [{'id': 1, 'itemName': 'Infected' }, {'id': 2, 'itemName': 'Recovered' }];
     for (let i = 0; i < this.baseData.countries.length; i++) {
       this.dropdownList.push({id: i, 'itemName': this.baseData.countries[i].nameFull});
+      if (this.baseData.countries[i].nameFull === 'Germany') {
+        this.selectedItems.push({id: i, 'itemName': this.baseData.countries[i].nameFull});
+      }
     }
     this.valueTypes = [];
     this.valueTypes.push({'id': 0, 'itemName': 'Susceptible' });
     this.valueTypes.push({'id': 1, 'itemName': 'Infected' });
     this.valueTypes.push({'id': 2, 'itemName': 'Recovered' });
     this.valueTypes.push({'id': 3, 'itemName': 'Deaths' });
+    this.simulation.SimulationDone.subscribe((ret) => {
+      if (ret) {
+        this.updateChart();
+      }
+    });
   }
 
-  ngOnInit() {
-
+  ngAfterViewInit() {
+    this.updateChart();
   }
 
   updateChart() {
@@ -119,7 +71,7 @@ export class ChartViewComponent implements OnInit {
             this.lineChartData.push(
               {
                 data: this.baseData.countries[this.selectedItems[i].id].getSVectorTotal(this.showRate),
-                label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Susceptible'
+                name: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Susceptible'
               }
             );
           }
@@ -127,7 +79,7 @@ export class ChartViewComponent implements OnInit {
             this.lineChartData.push(
               {
                 data: this.baseData.countries[this.selectedItems[i].id].getIVectorTotal(this.showRate),
-                label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Infected'
+                name: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Infected'
               }
             );
           }
@@ -135,15 +87,15 @@ export class ChartViewComponent implements OnInit {
             this.lineChartData.push(
               {
                 data: this.baseData.countries[this.selectedItems[i].id].getRVectorTotal(this.showRate),
-                label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Recovered'
+                name: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Recovered'
               }
             );
           }
           if (vt.id === 3) {
             this.lineChartData.push(
               {
-                data: this.baseData.countries[this.selectedItems[i].id].getFatalities(this.simulation.mortalityRate, this.showRate),
-                label: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Deaths'
+                data: this.baseData.countries[this.selectedItems[i].id].getFVectorTotal(this.showRate),
+                name: this.baseData.countries[this.selectedItems[i].id].nameFull + ' Deaths'
               }
             );
           }
@@ -153,7 +105,27 @@ export class ChartViewComponent implements OnInit {
       for (let i = 0; i < this.simulation.timeSpan; i++) {
         this.lineChartLabels.push(i.toString());
       }
-      this.chart.update();
     }
+    let yAxis = {};
+    if (this.showRate) {
+      yAxis = {title: {text: 'Percentage of people affected'}};
+    } else {
+      yAxis = {title: {text: 'Number of people affected'}};
+    }
+    this.chart = new Chart({
+        chart: {
+        type: 'line'
+        },
+        title: {
+          text: 'Development of patient groups over time'
+        },
+        credits: {
+          enabled: false
+        },
+        series: this.lineChartData,
+        xAxis: {title: {text: 'Days'}},
+        yAxis: yAxis
+      });
+    this.ready = true;
   }
 }

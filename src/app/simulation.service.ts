@@ -8,23 +8,23 @@ import { Subject } from 'rxjs';
 export class SimulationService {
   public timeStepLength: number;
   public timeSpan: number;
-  private beta: number;
-  private gamma: number;
+  public beta: number;
+  public gamma: number;
   public simulationHasFinised: boolean;
   public SimulationDone: Subject<boolean>;
   public progress = 0;
   public mortalityRate = 0.001;
   public infectionBasedMortalityEnabled = false;
-  public advancedMortalityPercentage: number = 1.0;
-  public advancedMortailiyPercentage: number = 5.0;
-  public advancedMortalityInfectionThreshold: number = 0.01;
+  public advancedMortalityPercentage = 1.0;
+  public advancedMortailiyPercentage = 5.0;
+  public advancedMortalityInfectionThreshold = 0.01;
 
   constructor(private baseData: BaseDataService) {
     this.simulationHasFinised = false;
-    this.beta = 2;
+    this.beta = 0.21;
     this.gamma = 0.2;
     this.timeStepLength = 1;
-    this.timeSpan = 10;
+    this.timeSpan = 200;
     this.SimulationDone = new Subject<boolean>();
   }
 
@@ -75,10 +75,14 @@ export class SimulationService {
   }
 
   run() {
-    this.simulationHasFinised = false;
-    this.compute();
-    this.simulationHasFinised = true;
-    this.SimulationDone.next(true);
+    const ready = this.validateBeforeRun();
+    if (ready) {
+      this.simulationHasFinised = false;
+      this.compute();
+      this.simulationHasFinised = true;
+      this.SimulationDone.next(true);
+    }
+    return ready;
   }
 
   compute() {
@@ -114,17 +118,25 @@ export class SimulationService {
     return ret;
   }
 
-  computeTotalDeaths(rate: boolean, mortality: number): number[] {
-    let ret = [];
-    for(let i = 0; i < this.baseData.countries[0].simulationResultI.length; i++) {
+  computeTotalDeaths(rate: boolean): number[] {
+    const ret = [];
+    for (let i = 0; i < this.baseData.countries[0].simulationResultI.length; i++) {
       ret[i] = 0;
     }
     this.baseData.countries.forEach(c => {
-      const inp = c.getFatalities(mortality, rate);
-      for(let i = 0; i < inp.length; i++) {
+      const inp = c.getFatalities( rate);
+      for (let i = 0; i < inp.length; i++) {
         ret[i] += inp[i];
       }
     });
     return ret;
+  }
+
+  validateBeforeRun(): boolean {
+    if (this.gamma <= 1 && this.gamma >= 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

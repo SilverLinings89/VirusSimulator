@@ -7,3 +7,5 @@
     <mat-label>Gamma</mat-label>
     <input matInput type="number" [(ngModel)]="simulation.gamma" />
 </mat-form-field>
+
+<p>The current disease-spread parameter R0 is: <strong>{{ simulation.beta / simulation.gamma }}</strong></p>

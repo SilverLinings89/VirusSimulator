@@ -13,10 +13,7 @@
           [disabled]="false"
           (change)="updateChart()"
           [(ngModel)]="showRate">
-        Show Rate
-      </mat-slide-toggle>
-<canvas baseChart width="400" height="400"
-[datasets]="lineChartData"
-[labels]="lineChartLabels"
-[chartType]="lineChartType"
-[options]="lineChartOptions"></canvas>
+  Show Rate
+</mat-slide-toggle>
+  <div [chart]="chart"></div>
+

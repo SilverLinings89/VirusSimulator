@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
 import { SimulationControlComponent } from './simulation-control/simulation-control.component';
 import { ChartViewComponent } from './chart-view/chart-view.component';
@@ -66,13 +65,14 @@ import { DiseaseParameterSettingsComponent } from './disease-parameter-settings/
 import { NumericalSettingsComponent } from './numerical-settings/numerical-settings.component';
 import { PresetListComponent } from './preset-list/preset-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ChartModule } from 'angular-highcharts';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
 const appRoutes: Routes = [
   { path: 'setup', component: SimulationControlComponent },
   { path: 'world', component: WorldViewComponent, canActivate: [SimulationDoneGuard]},
-  { path: 'country', component: CountryDataComponent, canActivate: [SimulationDoneGuard] },
+  { path: 'country', component: ChartViewComponent, canActivate: [SimulationDoneGuard] },
   { path: 'about', component: AboutComponent },
   { path: 'math', component: MathComponent },
   { path: '', redirectTo: 'setup', pathMatch: 'full' },
@@ -107,7 +107,7 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     BrowserModule,
     MatFormFieldModule,
-    ChartsModule,
+    ChartModule,
     PlotlyModule,
     CdkStepperModule,
     CdkTableModule,
@@ -152,7 +152,7 @@ const appRoutes: Routes = [
     ScrollingModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true }
+      { enableTracing: false }
     ),
     FontAwesomeModule
   ],
