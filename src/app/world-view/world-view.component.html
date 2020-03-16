@@ -1,1 +1,43 @@
-<app-map-view></app-map-view>
+<div class="main__cards">
+    <div class="card">
+        <div class="card__header">
+          <div class="card__header-title text-light"><strong>Virus Spread Animation</strong>
+          </div>
+          <div class="settings">
+            <div class="settings__block"><i class="fas fa-edit"></i></div>
+            <div class="settings__block"><i class="fas fa-cog"></i></div>
+          </div>
+        </div>
+        <div class="card__main">
+            <app-map-view></app-map-view>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card__header">
+          <div class="card__header-title text-light"><strong>Global Statistics</strong>
+          </div>
+          <div class="settings">
+            <div class="settings__block"><i class="fas fa-edit"></i></div>
+            <div class="settings__block"><i class="fas fa-cog"></i></div>
+          </div>
+        </div>
+        <div class="card__main">
+            <div [chart]="WorldChart"></div>  
+        </div>
+    </div>
+    <div class="card">
+        <div class="card__header">
+          <div class="card__header-title text-light"><strong>Global Outcome</strong>
+          </div>
+          <div class="settings">
+            <div class="settings__block"><i class="fas fa-edit"></i></div>
+            <div class="settings__block"><i class="fas fa-cog"></i></div>
+          </div>
+        </div>
+        <div class="card__main">
+            At the end of the simulation, <strong>{{simulation.globaldata.globalFatalities}}</strong> have died globally and <strong>{{simulation.globaldata.globalRecovered - simulation.globaldata.globalFatalities}}</strong> have recovered.
+        </div>
+    </div>
+</div>
+
+

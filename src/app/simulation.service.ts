@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseDataService } from './flight-data.service';
 import { Subject } from 'rxjs';
+import { GlobalSimulationData } from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,8 @@ export class SimulationService {
   public infectionBasedMortalityEnabled = false;
   public criticalMortality = 1.0;
   public criticalThreshold = 0.01;
+  public globaldata: GlobalSimulationData;
+  public immunityRate: number;
 
   constructor(private baseData: BaseDataService) {
     this.simulationHasFinised = false;
@@ -25,6 +28,7 @@ export class SimulationService {
     this.timeStepLength = 1;
     this.timeSpan = 200;
     this.SimulationDone = new Subject<boolean>();
+    this.immunityRate = 0;
   }
 
   setCriticalProperties(enableCriticalTracking: boolean, baseMortality: number, criticalMortality: number, criticalThreshold: number) {
@@ -55,6 +59,9 @@ export class SimulationService {
             this.baseData.computeCoupling(k, j) * this.baseData.countries[k].getLatestI() /
             this.baseData.countries[j].totalInhabitants;
         }
+      }
+      if (this.immunityRate > 0 && this.immunityRate <= 1) {
+        dS *= (1 - this.immunityRate);
       }
       const dR = this.gamma * this.baseData.countries[incomingCountry].getLatestI();
       stepS[incomingCountry] = dS * this.timeStepLength;
@@ -92,6 +99,15 @@ export class SimulationService {
   }
 
   compute() {
+    for (let c = 0; c < this.baseData.countries.length; c++) {
+      this.baseData.countries[c].setMortality(this.baseMortalityRate);
+      if (this.infectionBasedMortalityEnabled) {
+        this.baseData.countries[c].setCriticalProperties(true, this.baseMortalityRate, this.criticalMortality, this.criticalThreshold);
+      } else {
+        this.baseData.countries[c].setCriticalProperties(false, this.baseMortalityRate, this.baseMortalityRate, this.criticalThreshold);
+      }
+      this.baseData.countries[c].setMortality(this.baseMortalityRate);
+    }
     console.log('Start computing');
     this.clear();
     let time = 0;
@@ -100,6 +116,7 @@ export class SimulationService {
       time += this.timeStepLength;
       this.progress = 100 * this.timeSpan / time;
     }
+    this.computeGlobalStatistics();
   }
 
   getMaxIRate(): number {
@@ -136,6 +153,40 @@ export class SimulationService {
       }
     });
     return ret;
+  }
+
+  computeGlobalStatistics() {
+    const simulationResultS = [];
+    const simulationResultI = [];
+    const simulationResultR = [];
+    const simulationResultF = [];
+    const countryCount = this.baseData.countries.length;
+    for ( let step = 0; step < this.baseData.countries[0].simulationResultS.length; step++) {
+      let s = 0;
+      let i = 0;
+      let r = 0;
+      let f = 0;
+      for (let c = 0; c < countryCount; c++) {
+        s += this.baseData.countries[c].simulationResultS[step];
+        i += this.baseData.countries[c].simulationResultI[step];
+        r += this.baseData.countries[c].simulationResultR[step];
+        f += this.baseData.countries[c].simulationResultF[step];
+      }
+      simulationResultS.push(Math.floor(s));
+      simulationResultI.push(Math.floor(i));
+      simulationResultR.push(Math.floor(r));
+      simulationResultF.push(Math.floor(f));
+    }
+    this.globaldata = {
+      simulationResultS,
+      simulationResultI,
+      simulationResultR,
+      simulationResultF,
+      globalFatalities: simulationResultF[simulationResultF.length - 1],
+      globalInfected: simulationResultI[simulationResultI.length - 1],
+      globalSusceptible: simulationResultS[simulationResultS.length - 1],
+      globalRecovered: simulationResultR[simulationResultR.length - 1],
+    };
   }
 
   validateBeforeRun(): boolean {

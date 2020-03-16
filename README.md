@@ -1,6 +1,6 @@
 # CoronaSimulator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.
 
 ## Setup
 
@@ -25,4 +25,4 @@ Special Thanks to:
 - [The World Bank](https://data.worldbank.org/) for providing a list of [Departures](https://data.worldbank.org/indicator/ST.INT.DPRT) and [Arrivals](https://data.worldbank.org/indicator/ST.INT.ARVL) I could parse to JSON and use.
 - Obviously the [angular team](https://angular.io/), which is just doing an awesome job.
 - [Plotly](plot.ly) for their chart-tools in Javascript, which I use to draw the world map.
-- [Chart.js](https://www.chartjs.org/) which I use to draw the line graphs.
+- [Highcharts](https://www.highcharts.com/) for their chart-tools, which I draw all the charts with.

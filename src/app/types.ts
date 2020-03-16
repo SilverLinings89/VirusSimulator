@@ -1,10 +1,21 @@
+export class GlobalSimulationData {
+    globalFatalities: number;
+    globalRecovered: number;
+    globalSusceptible: number;
+    globalInfected: number;
+    public simulationResultS: number[];
+    public simulationResultI: number[];
+    public simulationResultR: number[];
+    public simulationResultF: number[];
+}
+
 export class Country {
     fractionIncoming: number;
     fractionOutgoing: number;
     nameCode: string;
     nameFull: string;
     totalInhabitants: number;
-    initialInfected: number;
+    public initialInfected: number;
     public simulationResultS: number[];
     public simulationResultI: number[];
     public simulationResultR: number[];
@@ -24,6 +35,17 @@ export class Country {
         this.nameFull = inName;
         this.isCiriticalStateTrackingEnabled = false;
         this.clear();
+    }
+
+    setMortality(in_mortality: number) {
+        this.baseMortality = in_mortality;
+    }
+
+    setCriticalProperties(enableCriticalTracking: boolean, baseMortality: number, criticalMortality: number, criticalThreshold: number) {
+        this.isCiriticalStateTrackingEnabled = enableCriticalTracking;
+        this.baseMortality = baseMortality;
+        this.criticalMortality = criticalMortality;
+        this.criticalThreshold = criticalThreshold;
     }
 
     interpolateDataForTime(inTime: number): {s: number, i: number, r: number} {
@@ -144,13 +166,6 @@ export class Country {
         } else {
             this.simulationResultF.push(Math.max(0, this.getLatestR() + newR) * this.baseMortality);
         }
-    }
-
-    setCriticalProperties(enableCriticalTracking: boolean, baseMortality: number, criticalMortality: number, criticalThreshold: number) {
-        this.isCiriticalStateTrackingEnabled = enableCriticalTracking;
-        this.baseMortality = baseMortality;
-        this.criticalMortality = criticalMortality;
-        this.criticalThreshold = criticalThreshold;
     }
 
     getSVectorTotal(rate: boolean): number[] {

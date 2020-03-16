@@ -37,7 +37,7 @@ export class MapViewComponent implements OnInit {
 
   constructor(private simulation: SimulationService, private baseData: BaseDataService, public plotlyService: PlotlyService) {
     this.simulation.SimulationDone.subscribe((d) => {
-      if(d) {
+      if (d) {
         this.disabled = false;
         this.min = 0;
         this.max = this.simulation.timeSpan;
@@ -75,7 +75,7 @@ export class MapViewComponent implements OnInit {
       colorbar: {
           autotic: true,
           tickprefix: '',
-          title: 'Infected Part of the popoulation in % '
+          title: 'Infectionrate in %'
       }
     }];
     const Plotly = this.plotlyService.getPlotly();

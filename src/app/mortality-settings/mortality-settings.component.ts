@@ -8,12 +8,11 @@ import { SimulationService } from '../simulation.service';
 })
 export class MortalitySettingsComponent implements OnInit {
 
-  constructor(private simulation: SimulationService) { }
+  constructor(public simulation: SimulationService) { }
 
   ngOnInit(): void {
   }
 
   updateMortalities() {
-    
   }
 }

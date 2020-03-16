@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SimulationService } from '../simulation.service';
+import { BaseDataService } from '../flight-data.service';
 
 @Component({
   selector: 'app-initial-infection',
@@ -6,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./initial-infection.component.css']
 })
 export class InitialInfectionComponent implements OnInit {
-
-  constructor() { }
+  showAll = false;
+  constructor(public baseData: BaseDataService) { }
 
   ngOnInit(): void {
   }

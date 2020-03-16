@@ -1,4 +1,8 @@
 <mat-form-field>
+    <mat-label>Immunity / Vaccination rate</mat-label><input matInput type="number" [(ngModel)]="simulation.immunityRate" />
+</mat-form-field>
+<br />
+<mat-form-field>
     <mat-label>Base Mortality</mat-label><input matInput type="number" [(ngModel)]="simulation.baseMortalityRate" />
 </mat-form-field>
 <br />
@@ -7,10 +11,10 @@
     <br />
     <mat-form-field>
         <mat-label>Critical Mortality</mat-label>
-        <input matInput type="number" [(ngModel)]="simulation.advancedMortalityPercentage" />
+        <input matInput type="number" [(ngModel)]="simulation.criticalMortality" />
     </mat-form-field><br />
     <mat-form-field>
         <mat-label>Critical Mortality Threshold</mat-label>
-        <input matInput type="number" [(ngModel)]="simulation.advancedMortalityInfectionThreshold" />
+        <input matInput type="number" [(ngModel)]="simulation.criticalThreshold" />
     </mat-form-field>
 </div>

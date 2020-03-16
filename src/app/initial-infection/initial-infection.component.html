@@ -1,1 +1,26 @@
-<p>initial-infection works!</p>
+<div class="card">
+    <div class="card__header">
+        <div class="card__header-title text-light"><strong>Initial Infections</strong> &nbsp;
+        <a class="card__header-link text-bold" *ngIf="!showAll" (click)="showAll = !showAll">View All</a>
+        <a class="card__header-link text-bold" *ngIf="showAll" (click)="showAll = !showAll">View Less</a>
+        </div>
+        <div class="settings">
+        <div class="settings__block"><i class="fas fa-edit"></i></div>
+        <div class="settings__block"><i class="fas fa-cog"></i></div>
+        </div>
+    </div>
+    <div class="card__main">
+        <ul style="padding-inline-start: 0;">
+            <ng-container *ngFor="let c of baseData.countries">
+                <li *ngIf="showAll || c.initialInfected !== 0" style="list-style: none;">
+                    <div>
+                        <mat-form-field>
+                            <mat-label>{{ c.nameFull }} ({{c.nameCode}})</mat-label>
+                            <input matInput type="number" [(ngModel)]="c.initialInfected" />
+                        </mat-form-field>
+                    </div>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>

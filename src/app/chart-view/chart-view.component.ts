@@ -101,18 +101,18 @@ export class ChartViewComponent implements AfterViewInit  {
           }
         });
       }
+      console.log(this.lineChartData);
       this.lineChartLabels = [];
       for (let i = 0; i < this.simulation.timeSpan; i++) {
         this.lineChartLabels.push(i.toString());
       }
-    }
-    let yAxis = {};
-    if (this.showRate) {
-      yAxis = {title: {text: 'Percentage of people affected'}};
-    } else {
-      yAxis = {title: {text: 'Number of people affected'}};
-    }
-    this.chart = new Chart({
+      let yAxis = {};
+      if (this.showRate) {
+        yAxis = {title: {text: 'Percentage of people affected'}};
+      } else {
+        yAxis = {title: {text: 'Number of people affected'}};
+      }
+      this.chart = new Chart({
         chart: {
         type: 'line'
         },
@@ -126,6 +126,7 @@ export class ChartViewComponent implements AfterViewInit  {
         xAxis: {title: {text: 'Days'}},
         yAxis: yAxis
       });
-    this.ready = true;
+      this.ready = true;
+    }
   }
 }
