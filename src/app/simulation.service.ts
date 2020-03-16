@@ -13,7 +13,6 @@ export class SimulationService {
   public gamma: number;
   public simulationHasFinised: boolean;
   public SimulationDone: Subject<boolean>;
-  public progress = 0;
   public baseMortalityRate = 0.001;
   public infectionBasedMortalityEnabled = false;
   public criticalMortality = 1.0;
@@ -77,7 +76,6 @@ export class SimulationService {
   }
 
   clear() {
-    this.progress = 0;
     this.baseData.countries.forEach(c => {
       c.clear();
     });
@@ -108,13 +106,12 @@ export class SimulationService {
       }
       this.baseData.countries[c].setMortality(this.baseMortalityRate);
     }
-    console.log('Start computing');
+
     this.clear();
     let time = 0;
     while (time < this.timeSpan) {
       this.computeStep();
       time += this.timeStepLength;
-      this.progress = 100 * this.timeSpan / time;
     }
     this.computeGlobalStatistics();
   }

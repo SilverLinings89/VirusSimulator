@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseDataService } from '../flight-data.service';
 import { SimulationService } from '../simulation.service';
 import { ThemePalette } from '@angular/material/core';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './simulation-control.component.html',
   styleUrls: ['./simulation-control.component.css']
 })
-export class SimulationControlComponent implements OnInit {
+export class SimulationControlComponent {
   color: ThemePalette = 'primary';
   mode = 'determinate';
   faPlay = faPlay;
@@ -21,9 +21,6 @@ export class SimulationControlComponent implements OnInit {
                private flights: BaseDataService,
                private notification: NotificationServiceService,
                private router: Router) {
-  }
-
-  ngOnInit() {
   }
 
   setCoronaDefault() {
@@ -41,7 +38,7 @@ export class SimulationControlComponent implements OnInit {
     this.simulation.timeSpan = 400;
     this.simulation.beta = 0.95;
     this.simulation.gamma = 1.0 / (19.5);
-    this.simulation.immunityRate = 0.95;
+    this.simulation.immunityRate = 0.97;
     this.simulation.baseMortalityRate = 0.001;
   }
 
@@ -52,7 +49,6 @@ export class SimulationControlComponent implements OnInit {
     } else {
       this.notification.displayNotification('The input values are not valid.');
     }
-
   }
 
 }

@@ -1,6 +1,8 @@
 <mat-form-field>
     <mat-label>Step Length</mat-label><input matInput type="number" [(ngModel)]="simulation.timeStepLength" />
-</mat-form-field><br>
+</mat-form-field>&nbsp;<fa-icon [icon]="faInfo"  matTooltip="The numerical scheme computes new values for the number of susceptible, infected and recovered patients for every time step. Typically, you can set this value to 1, meaning an updated will be computed for every day. If you only want to compute updates for every week, it would be 7. Some numerical errors can occur if this value is too large, but the runtime will increase if it is very small."></fa-icon>
+<br>
 <mat-form-field>
     <mat-label>Time Span</mat-label><input matInput type="number" [(ngModel)]="simulation.timeSpan" />
-</mat-form-field><br>
+</mat-form-field>&nbsp;<fa-icon [icon]="faInfo"  matTooltip="Measured in days. The scheme will keep computing steps until this value is reached. If the time step is 2 and this value is 40, 20 steps would be computed."></fa-icon>
+<br>

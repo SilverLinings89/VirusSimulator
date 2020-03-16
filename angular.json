@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "CoronaSimulator": {
+    "VirusSimulator": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/CoronaSimulator",
+            "outputPath": "dist/VirusSimulator",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -51,18 +51,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "CoronaSimulator:build"
+            "browserTarget": "VirusSimulator:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "CoronaSimulator:build:production"
+              "browserTarget": "VirusSimulator:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "CoronaSimulator:build"
+            "browserTarget": "VirusSimulator:build"
           }
         },
         "test": {
@@ -96,7 +96,7 @@
         }
       }
     },
-    "CoronaSimulator-e2e": {
+    "VirusSimulator-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -105,11 +105,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "CoronaSimulator:serve"
+            "devServerTarget": "VirusSimulator:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "CoronaSimulator:serve:production"
+              "devServerTarget": "VirusSimulator:serve:production"
             }
           }
         },
@@ -125,5 +125,5 @@
       }
     }
   },
-  "defaultProject": "CoronaSimulator"
+  "defaultProject": "VirusSimulator"
 }

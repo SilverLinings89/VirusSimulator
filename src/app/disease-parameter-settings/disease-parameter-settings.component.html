@@ -1,11 +1,11 @@
 <mat-form-field>
-    <mat-label>Beta</mat-label>
-    <input matInput type="number" [(ngModel)]="simulation.beta" />
-</mat-form-field> 
+    <mat-label>Beta </mat-label>
+    <input matInput type="number" [(ngModel)]="simulation.beta" /> 
+</mat-form-field> &nbsp;<fa-icon [icon]="faInfo"  matTooltip="This value describes how many people an infected person infects on average per timestep. So if the timestep is one day, and an infected person infects 2 people per day on average, this is 2."></fa-icon>
 <br />
 <mat-form-field>
     <mat-label>Gamma</mat-label>
     <input matInput type="number" [(ngModel)]="simulation.gamma" />
-</mat-form-field>
+</mat-form-field> &nbsp;<fa-icon [icon]="faInfo"  matTooltip="The fraction of people that recover per timestep. If, on average, it takes 10 days to recover, and the timestep is one day, this value should be 0.1."></fa-icon>
 
-<p>The current disease-spread parameter R0 is: <strong>{{ simulation.beta / simulation.gamma }}</strong></p>
+<p>The current disease-spread parameter R0 is: <strong>{{ simulation.beta / simulation.gamma }}</strong>&nbsp;<fa-icon [icon]="faInfo"  matTooltip="This value describes how many people an infected person infects, on average, over the course of their recovery. If this value is above 1, an epidemic in an unvaccinated population is possible."></fa-icon></p>  
