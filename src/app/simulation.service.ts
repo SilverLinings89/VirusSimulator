@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseDataService } from './flight-data.service';
 import { Subject } from 'rxjs';
-import { GlobalSimulationData } from './types';
+import { GlobalSimulationData, Country } from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class SimulationService {
     this.baseMortalityRate = baseMortality;
     this.criticalMortality = criticalMortality;
     this.criticalThreshold = criticalThreshold;
-}
+  }
 
   computeStep() {
     const countryCount = this.baseData.countries.length;
@@ -174,6 +174,27 @@ export class SimulationService {
       simulationResultR.push(Math.floor(r));
       simulationResultF.push(Math.floor(f));
     }
+    this.baseData.countries.forEach( (c) => {
+      c.computeGlobalPeak();
+    });
+    let earlyPeak = this.baseData.countries[0];
+    let latePeak = this.baseData.countries[0];
+    let lowPeak = this.baseData.countries[0];
+    let highPeak = this.baseData.countries[0];
+    this.baseData.countries.forEach(c => {
+      if (c.globalPeakRate > highPeak.globalPeakRate) {
+        highPeak = c;
+      }
+      if (c.globalPeakRate < lowPeak.globalPeakRate) {
+        lowPeak = c;
+      }
+      if (c.globalPeakStep < earlyPeak.globalPeakStep) {
+        earlyPeak = c;
+      }
+      if (c.globalPeakStep > latePeak.globalPeakStep) {
+        latePeak = c;
+      }
+    });
     this.globaldata = {
       simulationResultS,
       simulationResultI,
@@ -183,6 +204,10 @@ export class SimulationService {
       globalInfected: simulationResultI[simulationResultI.length - 1],
       globalSusceptible: simulationResultS[simulationResultS.length - 1],
       globalRecovered: simulationResultR[simulationResultR.length - 1],
+      earlyPeak,
+      latePeak,
+      lowPeak,
+      highPeak
     };
   }
 

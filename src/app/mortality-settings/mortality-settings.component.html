@@ -1,20 +1,20 @@
 <mat-form-field>
-    <mat-label>Immunity / Vaccination rate</mat-label><input matInput type="number" [(ngModel)]="simulation.immunityRate" />
-</mat-form-field>
+    <mat-label>Immunity / Vaccination rate</mat-label><input matInput type="number" [(ngModel)]="simulation.immunityRate" />  
+</mat-form-field> => {{ 100 * simulation.immunityRate | number }}%  <fa-icon [icon]="faE" matTooltip="The part of the population that has received a vaccination and can therefore not be infected."></fa-icon>
 <br />
 <mat-form-field>
     <mat-label>Base Mortality</mat-label><input matInput type="number" [(ngModel)]="simulation.baseMortalityRate" />
-</mat-form-field>
+</mat-form-field>  => {{ 100 * simulation.baseMortalityRate | number }}%  <fa-icon [icon]="faE" matTooltip="The base mortality is the fraction of the cases, in which the infected person dies from the disease while the health care system is still operating normally (non-critical case)."></fa-icon>
 <br />
-<mat-slide-toggle class="" [(ngModel)]="simulation.infectionBasedMortalityEnabled" (change)="updateMortalities()">Enable Infection-Based Mortality</mat-slide-toggle>
+<mat-slide-toggle class="" [(ngModel)]="simulation.infectionBasedMortalityEnabled" (change)="updateMortalities()">Enable Infection-Based Mortality</mat-slide-toggle>&nbsp;<fa-icon [icon]="faE" matTooltip="For diseases, which require intense medical care, it can become relevant how many people are infected to determine mortality. For the corona virus, for example, urgent cases require a ventilator to be treated. So if there are more urgent cases then ventilators, the mortality increases dramatically because the people can no longer be treated. This situation is called critical."></fa-icon>
 <div *ngIf="simulation.infectionBasedMortalityEnabled">
     <br />
     <mat-form-field>
         <mat-label>Critical Mortality</mat-label>
         <input matInput type="number" [(ngModel)]="simulation.criticalMortality" />
-    </mat-form-field><br />
+    </mat-form-field> => {{ 100 * simulation.criticalMortality | number }}%  <fa-icon [icon]="faE" matTooltip="Once the critical stage is reached, how high is the mortality? If, for example 5% of all cases require a certain device and with that device 80% of critical cases survive, the base mortality is 1% (5% * 0.2), the critical threshold is the number of devices per population and the critical mortality is 5% (all critical cases above the threshold die)."></fa-icon> <br />
     <mat-form-field>
         <mat-label>Critical Mortality Threshold</mat-label>
         <input matInput type="number" [(ngModel)]="simulation.criticalThreshold" />
-    </mat-form-field>
+    </mat-form-field> &nbsp; <fa-icon [icon]="faE" matTooltip="This value describes which infection rate has to be passed to activate the critical mortality rate. For corona virus, this would be the number of ventilators per population."></fa-icon>
 </div>

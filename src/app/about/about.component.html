@@ -1,1 +1,29 @@
-<p>about works!</p>
+<div class="main__cards">
+    <div class="card">
+      <div class="card__header">
+        <div class="card__header-title text-light"><strong>General Information</strong>
+        </div>
+        <div class="settings">
+          <div class="settings__block"><i class="fas fa-edit"></i></div>
+          <div class="settings__block"><i class="fas fa-cog"></i></div>
+        </div>
+      </div>
+      <div class="card__main">
+        <p>Predictions made with this tool hold no real world relevance. This tool is supposed to visualize the risc of pandemic spread without mitigation - it is not supposed to inform your decisions about health and safety. For detailed information on ongoing pandemics, please consult relevant sources such as the CDC or the WHO.</p>
+        </div>  
+    </div>
+
+    <div class="card">
+        <div class="card__header">
+          <div class="card__header-title text-light"><strong>The traffic model</strong>
+          </div>
+          <div class="settings">
+            <div class="settings__block"><i class="fas fa-edit"></i></div>
+            <div class="settings__block"><i class="fas fa-cog"></i></div>
+          </div>
+        </div>
+        <div class="card__main">
+          <p>SIR network simulations require a network model, i.e. a description of how individual regions interact. In this simulation, we use flight data to couple the countries. Since I was not able to find individual data for every country, I did this as follows: for every country I know how many aircrafts enter and leave. Based on this, I can compute which fraction of all global flights land or start in a given country. So if I need to know how many people travel from A to B, I simply multiply the total daily air-travellers with the fractions of planes leaving A and the fraction of planes arriving in B. While this is not perfect, it offers an easy implementation and can be refinded later.</p>
+        </div>  
+    </div>
+</div>

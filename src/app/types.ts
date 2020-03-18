@@ -7,6 +7,10 @@ export class GlobalSimulationData {
     public simulationResultI: number[];
     public simulationResultR: number[];
     public simulationResultF: number[];
+    earlyPeak: Country;
+    lowPeak: Country;
+    latePeak: Country;
+    highPeak: Country;
 }
 
 export class Country {
@@ -20,6 +24,8 @@ export class Country {
     public simulationResultI: number[];
     public simulationResultR: number[];
     public simulationResultF: number[];
+    public globalPeakStep = -1;
+    public globalPeakRate = 0;
     public simulationResultCriticalTimestep: boolean[];
     isCiriticalStateTrackingEnabled: boolean;
     baseMortality: number;
@@ -280,5 +286,15 @@ export class Country {
             }
         }
         return ret;
+    }
+
+    computeGlobalPeak() {
+        for (let i = 0; i < this.simulationResultI.length; i++) {
+            const temp_rate = this.simulationResultI[i] / this.totalInhabitants;
+            if (temp_rate > this.globalPeakRate ) {
+                this.globalPeakStep = i;
+                this.globalPeakRate = temp_rate;
+            }
+        }
     }
 }

@@ -5,8 +5,7 @@
         <a class="card__header-link text-bold" *ngIf="showAll" (click)="showAll = !showAll">View Less</a>
         </div>
         <div class="settings">
-        <div class="settings__block"><i class="fas fa-edit"></i></div>
-        <div class="settings__block"><i class="fas fa-cog"></i></div>
+        <div class="settings__block"><fa-icon [icon]="faE" matTooltip="In this view you can specify where the pandemic starts. Click 'Show All' to show all country or 'Show Less' to only show those, who have infected people at the beginning of the simulation."></fa-icon></div>
         </div>
     </div>
     <div class="card__main">

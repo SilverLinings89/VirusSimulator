@@ -24,7 +24,11 @@ export class SimulationControlComponent {
   }
 
   setCoronaDefault() {
-
+    this.simulation.gamma = 1 / 12;
+    this.simulation.beta = 0.25;
+    this.simulation.immunityRate = 0;
+    this.simulation.timeSpan = 300;
+    this.simulation.baseMortalityRate = 0.006;
   }
 
   setMeaselesZeroVac() {

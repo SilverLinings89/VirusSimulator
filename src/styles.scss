@@ -391,7 +391,8 @@ a {
   grid-area: main;
   background-color: $color-athens-gray;
   color: $color-fiord;
-
+  padding-right: 40px;
+  
   &__cards {
     display: block;
     column-count: 1;
