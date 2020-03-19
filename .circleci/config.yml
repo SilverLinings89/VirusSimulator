@@ -5,9 +5,6 @@ jobs:
   build:
     executor:
       name: node/default
-    branches:
-      only:
-        - master
     steps:
       - checkout
       - node/with-cache:
@@ -26,4 +23,7 @@ jobs:
 workflows:
     build-and-test:
       jobs:
+        branches:
+          only:
+            - master
         - build
