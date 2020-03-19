@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Send Via SFTP
           command: ncftp -R -v -u "${username}" ${host} VirusSimulator/ dist/VirusSimulator/*
-          workflows:
+  workflows:
     build-and-test:
       jobs:
         - build:
