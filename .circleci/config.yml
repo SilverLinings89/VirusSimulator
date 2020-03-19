@@ -10,7 +10,7 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
-            - run: npm run build --prod
+            - run: ng build --prod --buildOptimizer --output-hashing=none
       - run:
           name: Install LFTP
           command: |
