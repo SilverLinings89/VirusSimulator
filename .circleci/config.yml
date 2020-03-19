@@ -18,7 +18,7 @@ jobs:
             sudo apt-get install ncftp;
       - run:
           name: Send Via SFTP
-          command: ncftpput -R -v -u ${username} -p ${password} ${host} VirusSimulator/ dist/VirusSimulator/*
+          command: ncftpput -R -v -u ${username} -p ${password} ${host} ./ dist/VirusSimulator/*
 workflows:
   build-and-test:
     jobs:
