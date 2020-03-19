@@ -15,12 +15,11 @@ jobs:
           name: Install LFTP
           command: |
             sudo apt-get update;
-            sudo apt-get install lftp;
+            sudo apt-get install ncftp;
       - run:
           name: Send Via SFTP
-          command: lftp sftp://${username}:${password}@${host} -e "mirror -v -R --exclude .git/ --exclude .circleci/ ./dist/VirusSimulator/ ./; quit"
-
-workflows:
+          command: ncftp -R -v -u "${username}" ${host} VirusSimulator/ dist/VirusSimulator/*
+          workflows:
     build-and-test:
       jobs:
         - build:
