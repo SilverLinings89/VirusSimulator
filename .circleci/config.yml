@@ -5,12 +5,24 @@ jobs:
   build:
     executor:
       name: node/default
+    branches:
+      only:
+        - master
     steps:
       - checkout
       - node/with-cache:
           steps:
             - run: npm install
             - run: npm run build --prod
+      - run:
+          name: Install LFTP
+          command: |
+            sudo apt-get update;
+            sudo apt-get install lftp;
+      - run:
+          name: Send Via SFTP
+          command: lftp sftp://${username}:${password}@${host} -e "mirror -v -R --exclude .git/ --exclude .circleci/ ./dist/VirusSimulator/ ./; quit"
+
 workflows:
     build-and-test:
       jobs:
