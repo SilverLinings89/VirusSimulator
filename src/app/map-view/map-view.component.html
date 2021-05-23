@@ -1,6 +1,7 @@
 <div style="width: 100%; height: 600px;" id="myDiv"></div>
-<button mat-raised-button color="primary" (click)="visualize()">Run full animation</button> <br />
-<button mat-raised-button color="primary" (click)="draw()">Draw single frame</button> <br />
+<button mat-raised-button color="primary" *ngIf="!is_running" (click)="visualize()" style="margin-right: 20px;">Run full animation</button> 
+<button mat-raised-button color="primary" *ngIf="is_running" (click)="stop()" style="margin-right: 20px;">Stop animation</button>
+<button mat-raised-button color="primary" (click)="reset()" style="margin-right: 20px;">Reset animation</button>
 <mat-slider
     class="example-margin"
     [disabled]="disabled"

@@ -49,29 +49,37 @@ export class SimulationService {
     }
 
     for (let incomingCountry = 0; incomingCountry < countryCount; incomingCountry++ ) {
-      let dS = 0;
-      for (let j = 0; j < countryCount; j++) {
-        for (let k = 0; k < countryCount; k++) {
-          const i = incomingCountry;
-          dS -= this.beta *
-            this.baseData.computeCoupling(i, j) * this.baseData.countries[i].getLatestS() *
-            this.baseData.computeCoupling(k, j) * this.baseData.countries[k].getLatestI() /
-            this.baseData.countries[j].totalInhabitants;
+      if(this.baseData.countries[incomingCountry].fractionIncoming > 0 ) {
+        let dS = 0;
+        for (let j = 0; j < countryCount; j++) {
+          for (let k = 0; k < countryCount; k++) {
+            const i = incomingCountry;
+            dS -= this.beta *
+              this.baseData.computeCoupling(i, j) * this.baseData.countries[i].getLatestS() *
+              this.baseData.computeCoupling(k, j) * this.baseData.countries[k].getLatestI() /
+              this.baseData.countries[j].totalInhabitants;
+          }
         }
+        if (this.immunityRate > 0 && this.immunityRate <= 1) {
+          dS *= (1 - this.immunityRate);
+        }
+        const dR = this.gamma * this.baseData.countries[incomingCountry].getLatestI();
+        stepS[incomingCountry] = dS * this.timeStepLength;
+        stepI[incomingCountry] = (-dS - dR) * this.timeStepLength;
+        stepR[incomingCountry] = dR * this.timeStepLength;
       }
-      if (this.immunityRate > 0 && this.immunityRate <= 1) {
-        dS *= (1 - this.immunityRate);
-      }
-      const dR = this.gamma * this.baseData.countries[incomingCountry].getLatestI();
-      stepS[incomingCountry] = dS * this.timeStepLength;
-      stepI[incomingCountry] = (-dS - dR) * this.timeStepLength;
-      stepR[incomingCountry] = dR * this.timeStepLength;
     }
 
     for (let i = 0; i < countryCount; i++) {
-      this.baseData.countries[i].addSimulationResultS(stepS[i]);
-      this.baseData.countries[i].addSimulationResultI(stepI[i]);
-      this.baseData.countries[i].addSimulationResultR(stepR[i]);
+      if(this.baseData.countries[i].fractionIncoming > 0) {
+        this.baseData.countries[i].addSimulationResultS(stepS[i]);
+        this.baseData.countries[i].addSimulationResultI(stepI[i]);
+        this.baseData.countries[i].addSimulationResultR(stepR[i]);
+      }else {
+        this.baseData.countries[i].addSimulationResultS(0);
+        this.baseData.countries[i].addSimulationResultI(0);
+        this.baseData.countries[i].addSimulationResultR(0);
+      }
     }
   }
 
@@ -209,6 +217,7 @@ export class SimulationService {
       lowPeak,
       highPeak
     };
+    console.log(this.globaldata);
   }
 
   validateBeforeRun(): boolean {

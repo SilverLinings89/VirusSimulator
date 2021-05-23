@@ -83,7 +83,11 @@ export class BaseDataService {
   }
 
   countryIndexIsValid(idx: number): boolean {
-    return (idx >= 0 && idx < this.countries.length);
+    if (idx >= 0 && idx < this.countries.length) {
+      return this.countries[idx].fractionIncoming > 0;  
+    } else {
+      return false;
+    }
   }
 }
 

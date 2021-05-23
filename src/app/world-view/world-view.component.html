@@ -37,7 +37,7 @@
         <div class="card__main">
             <p>At the end of the simulation, <strong>{{simulation.globaldata.globalFatalities}}</strong> have died globally and <strong>{{simulation.globaldata.globalRecovered - simulation.globaldata.globalFatalities}}</strong> have recovered.</p>
             <p>The peaks of the spread happened between day <strong>{{simulation.globaldata.earlyPeak.globalPeakStep * simulation.timeStepLength}} ({{simulation.globaldata.earlyPeak.nameFull}})</strong> and <strong>{{simulation.globaldata.latePeak.globalPeakStep * simulation.timeStepLength}} ({{simulation.globaldata.latePeak.nameFull}}).</strong></p>
-            <p>At its peak, the disease infected between <strong>{{simulation.globaldata.lowPeak.globalPeakRate * 100}}% ({{simulation.globaldata.lowPeak.nameFull}})</strong> and <strong>{{simulation.globaldata.highPeak.globalPeakRate * 100}}% ({{simulation.globaldata.highPeak.nameFull}})</strong> of the total population.</p>
+            <p>At its peak, the disease infected between <strong>{{simulation.globaldata.lowPeak.globalPeakRate * 100 | number}}% ({{simulation.globaldata.lowPeak.nameFull}})</strong> and <strong>{{simulation.globaldata.highPeak.globalPeakRate * 100 | number}}% ({{simulation.globaldata.highPeak.nameFull}})</strong> of the total population.</p>
         </div>
     </div>
 </div>
