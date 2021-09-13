@@ -33,7 +33,7 @@
     "angular-highcharts": "^9.0.2",
     "angular-plotly.js": "^2.0.0",
     "angular2-multiselect-dropdown": "^4.6.3",
-    "core-js": "^3.6.4",
+    "core-js": "^3.16.2",
     "eslint": ">=4.18.2",
     "highcharts": "^9.1.0",
     "plotly.js": "^1.52.3",
