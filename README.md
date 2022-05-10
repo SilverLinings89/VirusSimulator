@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/SilverLinings89/VirusSimulator/tree/master.svg?style=svg)](https://circleci.com/gh/SilverLinings89/VirusSimulator/tree/master)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
 
 ## Setup
 
@@ -14,11 +14,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Status
 
 The project is currently not in a released state, meaning it will not work completely and some core features are missing. A basic implementation is there however.
+
+I check for security updates of this codebase occasionally but don't currently have the time to invest much effort into further development.
 
 ## Data Sources
 
