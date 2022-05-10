@@ -7,10 +7,11 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: node_modules/@angular/cli/bin/ng.js build --configuration production --build-optimizer --output-hashing=none
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: yarn build
+          name: Build app
 workflows:
   build-and-test:
     jobs:
