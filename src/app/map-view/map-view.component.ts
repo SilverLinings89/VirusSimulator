@@ -50,7 +50,7 @@ export class MapViewComponent implements OnInit {
     });
    }
 
-  ngOnInit() {
+  async ngOnInit()  {
     const values = [];
     const countries = [];
     for (let i = 0; i < this.baseData.countries.length; i++) {
@@ -87,7 +87,7 @@ export class MapViewComponent implements OnInit {
           title: 'Infectionrate in %'
       }
     }];
-    const Plotly = this.plotlyService.getPlotly();
+    const Plotly = await this.plotlyService.getPlotly();
     Plotly.newPlot('myDiv', this.data, this.layout, {showLink: false});
     this.currentTime = 0;
   }
@@ -128,13 +128,13 @@ export class MapViewComponent implements OnInit {
     this.drawForTime(this.currentTime);
   }
 
-  drawForTime(inTime: number) {
+  async drawForTime(inTime: number) {
     this.currentTime = inTime;
     for (let i = 0; i < this.baseData.countries.length; i++) {
       this.data[0].z[i] = 100 * this.baseData.countries[i].interpolateRateForTime(inTime).i;
     }
     this.layout.title = 'Prediciton of infected people worldwide on day ' + inTime ;
-    const Plotly = this.plotlyService.getPlotly();
+    const Plotly = await this.plotlyService.getPlotly();
     Plotly.newPlot('myDiv', this.data, this.layout, {showLink: false});
   }
 
