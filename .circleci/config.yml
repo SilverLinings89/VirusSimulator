@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@4.7.0
 jobs:
   build:
     executor:
@@ -11,14 +11,6 @@ jobs:
           steps:
             - run: npm install
             - run: node_modules/@angular/cli/bin/ng.js build --configuration production --build-optimizer --output-hashing=none
-      - run:
-          name: Install LFTP
-          command: |
-            sudo apt-get update;
-            sudo apt-get install ncftp;
-      - run:
-          name: Send Via SFTP
-          command: ncftpput -R -v -u ${username} -p ${password} ${host} ./ dist/VirusSimulator/*
 workflows:
   build-and-test:
     jobs:
