@@ -152,7 +152,7 @@ const appRoutes: Routes = [
     ScrollingModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false }
+      { enableTracing: false, relativeLinkResolution: 'legacy' }
     ),
     FontAwesomeModule
   ],

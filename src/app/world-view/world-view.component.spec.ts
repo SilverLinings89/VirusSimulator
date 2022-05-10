@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { WorldViewComponent } from './world-view.component';
 
@@ -6,7 +6,7 @@ describe('WorldViewComponent', () => {
   let component: WorldViewComponent;
   let fixture: ComponentFixture<WorldViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WorldViewComponent ]
     })
