@@ -2,15 +2,15 @@
 <button mat-raised-button color="primary" *ngIf="!is_running" (click)="visualize()" style="margin-right: 20px;">Run full animation</button> 
 <button mat-raised-button color="primary" *ngIf="is_running" (click)="stop()" style="margin-right: 20px;">Stop animation</button>
 <button mat-raised-button color="primary" (click)="reset()" style="margin-right: 20px;">Reset animation</button>
+<!-- TODO: The 'invert' property no longer exists -->
+<!-- TODO: The 'tickInterval' property no longer exists -->
+<!-- TODO: The 'vertical' property no longer exists -->
 <mat-slider
     class="example-margin"
     [disabled]="disabled"
-    [invert]="invert"
     [max]="max"
     [min]="min"
     [step]="step"
     [thumbLabel]="thumbLabel"
-    [tickInterval]="tickInterval"
-    [(ngModel)]="currentTime"
-    [vertical]="vertical">
+    [(ngModel)]="currentTime"><input matSliderThumb />
 </mat-slider>
