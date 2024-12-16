@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/sidenav/sidenav.component.css"],
-  "sourcesContent": [".sidenav {\n    display: flex; /* Will be hidden on mobile */\n    flex-direction: column;\n    grid-area: sidenav;\n    background-color: #394263;\n  }\n\n  .sidenav__list {\n    padding: 0;\n    margin-top: 85px;\n    list-style-type: none!important;\n  }\n\n  .sidenav__list-item {\n    padding: 20px 20px 20px 40px;\n    color: #ddd;\n  }\n\n  .sidenav__list-item:hover {\n    background-color: rgba(255, 255, 255, 0.2);\n    cursor: pointer;\n  }\n\n.navlist {\n  list-style-type: none;\n  padding-left:0px;\n}"],
-  "mappings": ";AAAA,CAAC;AACG,WAAS;AACT,kBAAgB;AAChB,aAAW;AACX,oBAAkB;AACpB;AAEA,CAAC;AACC,WAAS;AACT,cAAY;AACZ,mBAAiB;AACnB;AAEA,CAAC;AACC,WAAS,KAAK,KAAK,KAAK;AACxB,SAAO;AACT;AAEA,CALC,kBAKkB;AACjB,oBAAkB,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AACtC,UAAQ;AACV;AAEF,CAAC;AACC,mBAAiB;AACjB,gBAAa;AACf;",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/app.component.css"],
-  "sourcesContent": ["ul.navlist {\n    list-style-type: none !important;\n}"],
-  "mappings": ";AAAA,EAAE,CAAC;AACC,mBAAiB;AACrB;",
-  "names": []
-}
