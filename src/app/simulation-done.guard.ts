@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SimulationService } from './simulation.service';
 import { NotificationServiceService } from './notification-service.service';
@@ -7,7 +7,7 @@ import { NotificationServiceService } from './notification-service.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SimulationDoneGuard implements CanActivate {
+export class SimulationDoneGuard  {
   constructor(private simulation: SimulationService, private notification: NotificationServiceService) {
 
   }
