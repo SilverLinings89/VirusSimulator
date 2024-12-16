@@ -11,7 +11,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "ghbuild": "ng build --prod --base-href https://silverlinings89.github.io/VirusSimulator/",
+    "ghbuild": "ng build --configuration 'production' --base-href https://silverlinings89.github.io/VirusSimulator/",
     "test": "jest",
     "e2e": "ng e2e",
     "lint": "ng lint"
