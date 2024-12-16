@@ -18,7 +18,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Status
 
-I am working on creating a first feature complete version of this project.
+I am working on creating a first feature complete version of this project. There is still some migration to be done but at least I have upgraded all the core components to somewhat uptodate versions.
 
 ## Data Sources
 
