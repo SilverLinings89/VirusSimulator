@@ -1,0 +1,36 @@
+name: Deploy Angular App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 # Adjust if you're using a different Node.js version
+
+      # Install dependencies
+      - name: Install dependencies
+        run: corepack enable && corepack prepare pnpm@latest-9 --activate && pnpm config set store-dir .pnpm-store && pnpm install
+
+      # Build the Angular app
+      - name: Build Angular app
+        run: npm run build -- --output-path=dist
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
