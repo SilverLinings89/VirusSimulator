@@ -4,7 +4,6 @@ import { AppComponent } from './app.component';
 import { SimulationControlComponent } from './simulation-control/simulation-control.component';
 import { ChartViewComponent } from './chart-view/chart-view.component';
 import { MapViewComponent } from './map-view/map-view.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -48,7 +47,6 @@ import { MatTabsModule} from '@angular/material/tabs';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatTreeModule} from '@angular/material/tree';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { RouterModule, Routes } from '@angular/router';
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -98,13 +96,11 @@ const appRoutes: Routes = [
     PresetListComponent
   ],
   imports: [
-    AngularMultiSelectModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     FormsModule,
-    FlexLayoutModule,
     BrowserModule,
     MatFormFieldModule,
     ChartModule,
