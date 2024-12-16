@@ -6,9 +6,10 @@ import { faPlay, faSkullCrossbones, faBiohazard, faExclamation } from '@fortawes
 import { NotificationServiceService } from '../notification-service.service';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-simulation-control',
-  templateUrl: './simulation-control.component.html',
-  styleUrls: ['./simulation-control.component.css']
+    selector: 'app-simulation-control',
+    templateUrl: './simulation-control.component.html',
+    styleUrls: ['./simulation-control.component.css'],
+    standalone: false
 })
 export class SimulationControlComponent {
   color: ThemePalette = 'primary';

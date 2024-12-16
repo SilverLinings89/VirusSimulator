@@ -5,9 +5,10 @@ import { BaseDataService } from '../flight-data.service';
 import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-initial-infection',
-  templateUrl: './initial-infection.component.html',
-  styleUrls: ['./initial-infection.component.css']
+    selector: 'app-initial-infection',
+    templateUrl: './initial-infection.component.html',
+    styleUrls: ['./initial-infection.component.css'],
+    standalone: false
 })
 export class InitialInfectionComponent implements OnInit {
   showAll = false;

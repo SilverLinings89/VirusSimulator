@@ -3,9 +3,10 @@ import { Chart } from 'angular-highcharts';
 import { SimulationService } from '../simulation.service';
 
 @Component({
-  selector: 'app-world-view',
-  templateUrl: './world-view.component.html',
-  styleUrls: ['./world-view.component.css']
+    selector: 'app-world-view',
+    templateUrl: './world-view.component.html',
+    styleUrls: ['./world-view.component.css'],
+    standalone: false
 })
 export class WorldViewComponent implements AfterViewInit {
   public WorldChart: Chart;

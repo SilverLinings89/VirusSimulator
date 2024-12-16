@@ -4,9 +4,10 @@ import { SimulationService } from '../simulation.service';
 import { PlotlyService } from 'angular-plotly.js';
 
 @Component({
-  selector: 'app-map-view',
-  templateUrl: './map-view.component.html',
-  styleUrls: ['./map-view.component.css']
+    selector: 'app-map-view',
+    templateUrl: './map-view.component.html',
+    styleUrls: ['./map-view.component.css'],
+    standalone: false
 })
 export class MapViewComponent implements OnInit {
   data: any;

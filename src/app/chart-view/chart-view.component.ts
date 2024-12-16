@@ -4,9 +4,10 @@ import { SimulationService } from '../simulation.service';
 import { Chart } from 'angular-highcharts';
 
 @Component({
-  selector: 'app-chart-view',
-  templateUrl: './chart-view.component.html',
-  styleUrls: ['./chart-view.component.css']
+    selector: 'app-chart-view',
+    templateUrl: './chart-view.component.html',
+    styleUrls: ['./chart-view.component.css'],
+    standalone: false
 })
 export class ChartViewComponent implements AfterViewInit  {
   ready = false;
