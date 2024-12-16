@@ -12,6 +12,9 @@ jobs:
           keys:
             - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       - run:
+          name: Enable Corepack
+          command: corepack enable --install-directory="/home/circleci/bin"
+      - run:
           name: Install pnpm package manager
           command: |
             corepack enable
@@ -33,7 +36,7 @@ workflows:
   build-and-test:
     jobs:
       - build:
-        filters:
-          branches: 
-            only: 
-              -main
+          filters:
+            branches: 
+              only: 
+                -main
