@@ -4,7 +4,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/base:stable
+      - image: node:20
     steps:
       - checkout
       - restore_cache:

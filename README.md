@@ -1,6 +1,6 @@
 # CoronaSimulator
 
-[![CircleCI](https://circleci.com/gh/SilverLinings89/VirusSimulator/tree/master.svg?style=svg)](https://circleci.com/gh/SilverLinings89/VirusSimulator/tree/master)
+[![CircleCI](https://circleci.com/gh/SilverLinings89/VirusSimulator/tree/main.svg?style=svg)](https://circleci.com/gh/SilverLinings89/VirusSimulator/tree/main)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
 
